@@ -2,6 +2,7 @@
 	background-color: rgb(226, 223, 210);
 	box-sizing: border-box;
 	width: 22vw;
+    min-width: 25rem;
 	margin: 1rem;
 	padding: 1rem;
 	min-height: 25vh;
@@ -42,15 +43,7 @@
 	width: 100%;
 }
 
-.info__div {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	flex-wrap: nowrap;
-}
-
-.info__div > p {
+.couponItem__info  p {
 	position: relative;
 	padding-right: 2%;
 }

@@ -1,0 +1,18 @@
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 6vh;
+	border-bottom: 1px solid black;
+    background-color: rgb(184, 181, 169);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header > h1 {
+    margin: 0;
+    padding-left: 3vw;
+}

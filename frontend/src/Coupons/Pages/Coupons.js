@@ -2,7 +2,7 @@ import React from 'react';
 
 import CouponItem from "../Components/CouponItem";
 
-import "./Coupons.css"
+import styles from "./Coupons.module.css";
 
 const DUMMY_COUPONS = [ {
     id: "c1",
@@ -13,7 +13,7 @@ const DUMMY_COUPONS = [ {
     expirationDate: new Date("22 Aug 2023").toLocaleDateString()
 },
 {
-    id: "c1",
+    id: "c2",
     title: "50% on any product",
     couponCode: "12345",
     company: "Amazon",
@@ -21,7 +21,7 @@ const DUMMY_COUPONS = [ {
     expirationDate: new Date("22 Aug 2023").toLocaleDateString()
 },
 {
-    id: "c1",
+    id: "c3",
     title: "50% on any product",
     couponCode: "12345",
     company: "Amazon",
@@ -29,7 +29,7 @@ const DUMMY_COUPONS = [ {
     expirationDate: new Date("22 Aug 2023").toLocaleDateString()
 },
 {
-    id: "c1",
+    id: "c4",
     title: "50% on any product",
     couponCode: "12345",
     company: "Amazon",
@@ -40,7 +40,7 @@ const DUMMY_COUPONS = [ {
 
 const Coupons = () => {
     return (
-        <li className="coupon__list">
+        <li className={ styles.coupon__list }>
             {
                 DUMMY_COUPONS.map(coupon => (
                     <CouponItem
