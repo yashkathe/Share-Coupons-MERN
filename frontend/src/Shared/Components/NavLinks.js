@@ -23,7 +23,7 @@ const NavLinks = () => {
                 </NavLink>
             </li>
             <li>
-                <NavLink to="/authentication" exact>
+                <NavLink activeClassName={styles.active} to="/authentication/signin" exact>
                     Authentication
                 </NavLink>
             </li>
