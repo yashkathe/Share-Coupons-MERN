@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const couponsRoutes = require('./routes/coupons-routes');
-const usersRoutes = require('./routes/user-routes')
+const usersRoutes = require('./routes/user-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -10,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/api/coupons', couponsRoutes);
-app.use('/api/users', usersRoutes)
+app.use('/api/users', usersRoutes);
 
 app.use((req, res, next) => {
     throw new HttpError('Could not find this route', 404);
@@ -25,4 +26,12 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || "An unknown error occured" });
 });
 
-app.listen(5000);
+mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+        app.listen(5000);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
