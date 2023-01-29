@@ -16,7 +16,7 @@ const couponSchema = new Schema({
     expirationDate:
         { type: String },
     creator:
-        { type: String, required: true }
+        { type: mongoose.Types.ObjectId, required: true, ref: 'User' }
 });
 
 module.exports = mongoose.model('Coupon', couponSchema);

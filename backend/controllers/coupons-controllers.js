@@ -1,8 +1,9 @@
-const uuid = require('uuid').v4;
 const { validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 const HttpError = require('../models/http-error');
 const Coupon = require('../models/coupons');
+const User = require('../models/users');
 
 const getCouponById = async (req, res, next) => {
     const couponId = req.params.couponId;
@@ -48,11 +49,37 @@ const createCoupon = async (req, res, next) => {
 
     const { title, description, couponCode, company, image, expirationDate, creator } = req.body;
     const createdCoupon = new Coupon({
-        title, description, couponCode, company, image, expirationDate, creator
+        title,
+        description,
+        couponCode,
+        company,
+        image,
+        expirationDate,
+        creator
     });
 
+    // check if if of logged in user is existing already
+    let user;
+
     try {
-        await createdCoupon.save();
+        user = await User.findById(creator);
+    } catch(err) {
+        return next(new HttpError('Creating Coupon Failed', 500));
+    }
+
+    if(!user) {
+        return next(new HttpError('Could not find user for provided ID', 404));
+    }
+
+    try {
+
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        await createdCoupon.save({ session: sess });
+        user.coupons.push(createdCoupon);
+        await user.save({ session: sess });
+        await sess.commitTransaction();
+
     } catch(err) {
         return next(new HttpError('Creating Coupon Failed', 500));
     }
@@ -93,9 +120,13 @@ const deleteCouponById = async (req, res, next) => {
 
     let coupon;
     try {
-        coupon = await Coupon.findByIdAndDelete(couponId);
+        coupon = await Coupon.findByIdAndDelete(couponId).populate('creator') ;
     } catch {
         return next(new HttpError('Could not update a coupon with specified ID', 500));
+    }
+
+    if(!coupon){
+        return next(new HttpError('Could not find a coupon with specified ID', 404));
     }
 
     res.status(200).json({ coupon: coupon.toObject({ getters: true }), message: "Coupon deleted successfully" });
