@@ -1,0 +1,31 @@
+.card {
+	background-color: #21262d;
+	margin: 15%;
+	margin-top: 20vh;
+	height: 50vh;
+	padding: 10px;
+	text-align: center;
+}
+
+.card h1 {
+	color: rgba(241, 241, 241, 0.8);
+}
+
+.card p {
+	font-style: italic;
+	color: #8d8d8d;
+}
+
+.card a {
+    text-decoration: none;
+	padding: 2px;
+    color: inherit;
+	border-bottom: 2px solid #7371ff;
+	color: #7371ff;
+}
+.card a:hover,
+.card a:active {
+	box-sizing: border-box;
+	border-bottom: 2px solid #7371ff;
+	color: #7371ff;
+}

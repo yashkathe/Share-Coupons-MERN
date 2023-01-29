@@ -1,0 +1,30 @@
+.header__ul {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.header__ul > li {
+	padding: 1rem;
+	font-size: 1.2rem;
+}
+
+.header__ul a {
+	text-decoration: none;
+	padding: 2px;
+	color: #757575;
+}
+
+.header__ul a:hover,
+.header__ul a:active {
+	box-sizing: border-box;
+	border-bottom: 2px solid #7371ff;
+	color: #7371ff;
+}
+
+.active {
+	border-bottom: 2px solid #7371ff;
+	color: #7371ff;
+}
