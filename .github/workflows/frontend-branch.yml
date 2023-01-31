@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Push Code to Frontend Branch
 on: workflow_dispatch
 
 jobs:
