@@ -13,11 +13,6 @@ const NavLinks = () => {
                 </NavLink>
             </li>
             <li>
-                <NavLink  activeClassName={styles.active} to="/users" exact>
-                    Users
-                </NavLink>
-            </li>
-            <li>
                 <NavLink  activeClassName={styles.active} to="/coupon/new" exact>
                     Add Coupons
                 </NavLink>

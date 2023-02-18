@@ -1,31 +1,23 @@
 .card {
-	background-color: #21262d;
-	margin: 15%;
-	margin-top: 20vh;
-	height: 50vh;
-	padding: 10px;
-	text-align: center;
+    background-color: #21262d;
+    margin: 15%;
+    margin-top: 20vh;
+    min-height: auto;
+    padding: 10px;
+    text-align: center;
 }
 
-.card h1 {
-	color: rgba(241, 241, 241, 0.8);
+.header {
+    color: rgba(241, 241, 241, 0.8);
+    font-size: 1.1rem;
 }
 
-.card p {
-	font-style: italic;
-	color: #8d8d8d;
+.footer{
+    color: rgba(241, 241, 241, 0.8);
+    font-style: italic;
+    font-size: 1.2rem;
 }
 
-.card a {
-    text-decoration: none;
-	padding: 2px;
-    color: inherit;
-	border-bottom: 2px solid #7371ff;
-	color: #7371ff;
-}
-.card a:hover,
-.card a:active {
-	box-sizing: border-box;
-	border-bottom: 2px solid #7371ff;
-	color: #7371ff;
+.footer a {
+    color:#7371ff;
 }
