@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FormLabel from "../../Shared/Components/FormLabel";
 
 import styles from './Auth.module.css';
 
@@ -39,24 +40,9 @@ const SignupForm = (props) => {
 
     return (
         <form onSubmit={ submitHandler }>
-            <div className={ styles.form_element }>
-                <label>
-                    Email Address
-                </label>
-                <input type="email" onChange={ emailChangeHandler } value={ emailID } />
-            </div>
-            <div className={ styles.form_element }>
-                <label>
-                    Password
-                </label>
-                <input type="password" minLength="8" maxLength="16" onChange={ passwordChangeHandler } value={ password } />
-            </div>
-            <div className={ styles.form_element }>
-                <label>
-                    Confirm Password
-                </label>
-                <input type="password" minLength="8" maxLength="16" onChange={ confirmPasswordChangeHandler } value={ confirmPassword } />
-            </div>
+            <FormLabel label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
+            <FormLabel label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
+            <FormLabel label="Confirm Password" type="password" changeHandler={ confirmPasswordChangeHandler } value={ confirmPassword } required={ true } min="8" max="12" />
             <div className={ styles.form_element }>
                 <button type="submit" >SIGN UP</button>
             </div>
