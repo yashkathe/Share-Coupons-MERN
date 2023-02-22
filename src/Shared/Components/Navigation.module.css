@@ -1,0 +1,29 @@
+.main_header h1 {
+    margin: 0;
+    padding-left: 3vw;
+    color: #ffffff
+}
+
+@media(max-width:28rem) {
+    .main_header {
+        display: none;
+    }
+}
+
+.mob_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.mob_header h1 {
+    margin: 0;
+    padding-left: 5vw;
+    color: #ffffff;
+    width: 80vw;
+}
+
+.mob_header>div {
+    width: 20vw;
+}

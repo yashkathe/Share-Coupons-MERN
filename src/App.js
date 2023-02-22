@@ -5,13 +5,13 @@ import Signin from "./Autentication/Pages/Signin";
 import Signup from "./Autentication/Pages/Signup";
 
 import styles from './App.module.css';
-import Header from "./Shared/Components/Header";
 import AddCoupons from "./Coupons/Pages/AddCoupons";
+import Navigation from "./Shared/Components/Navigation";
 
 function App() {
     return (
         <Router>
-            <Header />
+            <Navigation />
             <main className={ styles.main }>
                 <Switch>
                     <Route path="/" exact>
