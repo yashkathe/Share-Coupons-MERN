@@ -1,5 +1,8 @@
 name: Push Code to Backend Branch
-on: workflow_dispatch
+on:
+  push:
+    paths:
+      - backend/**
 
 jobs:
   deploy:
@@ -9,7 +12,7 @@ jobs:
 
     - uses: actions/checkout@master
     
-    - name: Deploy backend
+    - name: Deploy Backend Code
       uses: s0/git-publish-subdir-action@develop
       env:
         REPO: self
