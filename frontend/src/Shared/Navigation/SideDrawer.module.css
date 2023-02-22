@@ -1,0 +1,11 @@
+@media(max-width:28rem) {
+    .sideDrawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 75vw;
+        height: 100vh;
+        background-color: #21262d;
+        z-index: 10;
+    }
+}

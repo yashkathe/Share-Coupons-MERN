@@ -7,6 +7,8 @@ const FormLabel = (props) => {
         <div className={ styles.form_element }>
             <label >{ props.label }</label>
             <input
+                onFocus={ props.focusHandler }
+                onBlur={props.blurHandler}
                 type={ props.type }
                 onChange={ props.changeHandler }
                 value={ props.value }

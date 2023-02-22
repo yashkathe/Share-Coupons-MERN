@@ -1,13 +1,11 @@
 import React from 'react';
 
 import styles from "./Header.module.css";
-import NavLinks from "./NavLinks";
 
-const Header = () => {
+const Header = (props) => {
     return (
-        <div className={ styles.header }>
-            <h1>Share Coupons</h1>
-            <NavLinks />
+        <div className={ ` ${styles.header} ${props.className} ` }>
+            { props.children }
         </div>
     );
 };
