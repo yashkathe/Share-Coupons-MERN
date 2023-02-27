@@ -22,17 +22,15 @@ const SignupForm = (props) => {
     };
 
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
 
         const user = {
-            emailID,
-            password,
-            confirmPassword
+            email: emailID,
+            password
         };
 
         props.onSigningUp(user);
-
         setEmailID('');
         setPassword('');
         setConfirmPassword('');
@@ -40,9 +38,9 @@ const SignupForm = (props) => {
 
     return (
         <form onSubmit={ submitHandler }>
-            <FormLabel label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
-            <FormLabel label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
-            <FormLabel label="Confirm Password" type="password" changeHandler={ confirmPasswordChangeHandler } value={ confirmPassword } required={ true } min="8" max="12" />
+            <FormLabel name="email" label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
+            <FormLabel name="password" label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
+            <FormLabel name="confirmPassword" label="Confirm Password" type="password" changeHandler={ confirmPasswordChangeHandler } value={ confirmPassword } required={ true } min="8" max="12" />
             <div className={ styles.form_element }>
                 <button type="submit" >SIGN UP</button>
             </div>

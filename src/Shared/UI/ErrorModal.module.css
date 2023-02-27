@@ -1,0 +1,24 @@
+.modal{
+    z-index: 11;
+    min-height: 40vh;
+    max-height: fit-content;
+    width: 55vw;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    top: 20vh;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: rgba(241, 241, 241, 0.5);
+    background-color: #21262d;
+}
+
+.modal > h1 {
+    font-size: 2.8vw;
+}
+
+.modal > p {
+    font-size: 1.5vw;
+}
