@@ -6,12 +6,12 @@ import Signup from "./Autentication/Pages/Signup";
 
 import styles from './App.module.css';
 import AddCoupons from "./Coupons/Pages/AddCoupons";
-import Navigation from "./Shared/Components/Navigation";
+import Header from "./Shared/Components/Header";
 
 function App() {
     return (
         <Router>
-            <Navigation />
+            <Header />
             <main className={ styles.main }>
                 <Switch>
                     <Route path="/" exact>

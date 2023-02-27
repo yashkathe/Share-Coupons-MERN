@@ -1,6 +1,8 @@
-.menu {
-    height: 0.4vh;
-    width: 60%;
-    background-color: #9e9a9a;
-    margin: 10% 20% 10% 20%;
+@media(max-width:28rem) {
+    .menu {
+        height: 4px;
+        width: 60%;
+        background-color: #9e9a9a;
+        margin: 10% 20% 10% 20%;
+    }
 }

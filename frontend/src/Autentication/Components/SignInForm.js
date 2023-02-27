@@ -20,7 +20,7 @@ const SignInForm = (props) => {
         event.preventDefault();
 
         const user = {
-            emailID,
+            email: emailID,
             password,
         };
 
@@ -33,8 +33,8 @@ const SignInForm = (props) => {
     return (
         <form onSubmit={ submitHandler }>
 
-            <FormLabel label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
-            <FormLabel label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
+            <FormLabel name="email" label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
+            <FormLabel name="password" label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
 
             <div className={ styles.form_element }>
                 <button type="submit" >LOG IN</button>
