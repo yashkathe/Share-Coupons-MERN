@@ -9,7 +9,7 @@ const AddCouponForm = (props) => {
     const [ description, setDescription ] = useState("");
     const [ couponCode, setCouponCode ] = useState("");
     const [ company, setCompany ] = useState("");
-    const [ date, setDate ] = useState("");
+    const [ expirationDate, setExpirationDate ] = useState("");
 
     const titleChangeHandler = (event) => {
         setTitle(event.target.value);
@@ -28,7 +28,7 @@ const AddCouponForm = (props) => {
     };
 
     const dateChangeHandler = (event) => {
-        setDate(event.target.value);
+        setExpirationDate(event.target.value);
     };
 
 
@@ -40,7 +40,7 @@ const AddCouponForm = (props) => {
             description,
             couponCode,
             company,
-            date
+            expirationDate
         };
 
         props.onCreateCoupon(newCoupon);
@@ -49,7 +49,7 @@ const AddCouponForm = (props) => {
         setDescription("");
         setCouponCode("");
         setCompany("");
-        setDate("");
+        setExpirationDate("");
     };
 
     return (
@@ -58,7 +58,7 @@ const AddCouponForm = (props) => {
             <FormLabel label="Description" type="text" changeHandler={ descriptionChangeHandler } value={ description } />
             <FormLabel label="Coupon Code" type="text" changeHandler={ couponChangeHandler } value={ couponCode } required={ true } />
             <FormLabel label="Company" type="text" changeHandler={ companyChangeHandler } value={ company } required={ true } />
-            <FormLabel label="Expiration Date" type="date" changeHandler={ dateChangeHandler } value={ date } />
+            <FormLabel label="Expiration Date" type="date" changeHandler={ dateChangeHandler } value={ expirationDate } />
             <div className={ styles.form_element }>
                 <button type="submit" >CREATE COUPON</button>
             </div>
