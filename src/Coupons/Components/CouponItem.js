@@ -5,11 +5,21 @@ import Card from "../../Shared/UI/Card";
 import styles from "./CouponItem.module.css";
 
 const CouponItem = (props) => {
+
+    if(props.data.length === 0) {
+        return (
+            <Card className={ styles.card }>
+                <div className={ styles.couponItem__code }>
+                    <h1> No cards found !</h1>
+                </div>
+            </Card>
+        );
+    }
+
     return (
         <Card className={ styles.card }>
             <div className={ styles.couponItem__code }>
                 <h1> { props.title } !</h1>
-                <h3>{ props.couponCode }</h3>
             </div>
             <div className={ styles.couponItem__info }>
                 <div>
@@ -18,6 +28,11 @@ const CouponItem = (props) => {
                 <div>
                     <p>EXPIRES:</p><h4>   { props.expirationDate }</h4>
                 </div>
+            </div>
+            <div className={ styles.buttons }>
+                <button onClick={ props.onView } >VIEW</button>
+                <button onClick={ props.onEdit }>EDIT</button>
+                <button onClick={ props.onDelete }>DELETE</button>
             </div>
         </Card>
     );

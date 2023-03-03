@@ -16,6 +16,8 @@ const FormLabel = (props) => {
                 maxLength={ props.max }
                 minLength={ props.min }
                 required={ props.required }
+                max={props.max}
+                min={props.min}
             />
         </div>
     );
