@@ -8,15 +8,15 @@ const couponSchema = new Schema({
     description:
         { type: String, required: true },
     couponCode:
-        { type: Number, required: true },
+        { type: String, required: true },
     company:
         { type: String },
-    image:
-        { type: String, required: true },
     expirationDate:
         { type: String },
     creator:
-        { type: mongoose.Types.ObjectId, required: true, ref: 'User' }
+        { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+    time:
+        { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Coupon', couponSchema);
