@@ -23,7 +23,9 @@ const signup = async (req, res, next) => {
     if(!errors.isEmpty()) {
         return next(new HttpError('Invalid inputs passed', 500));
     }
-    const { name, email, image, password} = req.body;
+    const { email, password } = req.body;
+
+    console.log(email, password);
 
     let existingUser;
     try {
@@ -37,9 +39,7 @@ const signup = async (req, res, next) => {
     }
 
     const createdUser = new User({
-        name,
         email,
-        image,
         password,
         coupons: []
     });
@@ -47,6 +47,7 @@ const signup = async (req, res, next) => {
     try {
         await createdUser.save();
     } catch(err) {
+        console.log(err);
         return next(new HttpError('Creating new user failed', 500));
     }
 
@@ -55,6 +56,8 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
+
+    console.log(email, password)
 
     let existingUser;
     try {

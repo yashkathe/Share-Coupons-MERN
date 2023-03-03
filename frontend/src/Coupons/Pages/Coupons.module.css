@@ -5,3 +5,8 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+
+.error_card{
+    color: aliceblue;
+    font: 5rem;
+}

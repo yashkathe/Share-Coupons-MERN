@@ -11,16 +11,19 @@ import { AuthContext } from "./Shared/Context/auth-context";
 
 import styles from './App.module.css';
 
-function App() {
+const App = () => {
 
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+    const [ userId, setUserId ] = useState(false);
 
-    const login = useCallback(() => {
+    const login = useCallback((uid) => {
         setIsLoggedIn(true);
+        setUserId(uid);
     }, []);
 
     const logout = useCallback(() => {
         setIsLoggedIn(false);
+        setUserId(null);
     }, []);
 
     let routes;
@@ -55,7 +58,7 @@ function App() {
     }
 
     return (
-        <AuthContext.Provider value={ { isLoggedIn, login, logout } } >
+        <AuthContext.Provider value={ { isLoggedIn, userId, login, logout } } >
             <Router>
                 <Header />
                 <main className={ styles.main }>
@@ -64,6 +67,6 @@ function App() {
             </Router>
         </AuthContext.Provider>
     );
-}
+};
 
 export default App;

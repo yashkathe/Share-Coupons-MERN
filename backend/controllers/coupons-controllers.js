@@ -5,6 +5,18 @@ const HttpError = require('../models/http-error');
 const Coupon = require('../models/coupons');
 const User = require('../models/users');
 
+const getCoupons = async (req, res, next) => {
+
+    let coupons;
+    try {
+        coupons = await Coupon.find({});
+    } catch(err) {
+        return next(new HttpError('Failed to retrive coupons', 500));
+    }
+
+    res.status(200).json({ coupons: coupons.map(coupon => coupon.toObject({ getters: true })) });
+};
+
 const getCouponById = async (req, res, next) => {
     const couponId = req.params.couponId;
 
@@ -44,16 +56,15 @@ const getCouponsByUserId = async (req, res, next) => {
 const createCoupon = async (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-        throw new HttpError('Invalid inputs passed', 422);
+        return next(new HttpError('Invalid inputs passed', 422));
     }
 
-    const { title, description, couponCode, company, image, expirationDate, creator } = req.body;
+    const { title, description, couponCode, company, expirationDate, creator } = req.body;
     const createdCoupon = new Coupon({
         title,
         description,
         couponCode,
         company,
-        image,
         expirationDate,
         creator
     });
@@ -120,12 +131,12 @@ const deleteCouponById = async (req, res, next) => {
 
     let coupon;
     try {
-        coupon = await Coupon.findByIdAndDelete(couponId).populate('creator') ;
+        coupon = await Coupon.findByIdAndDelete(couponId).populate('creator');
     } catch {
         return next(new HttpError('Could not update a coupon with specified ID', 500));
     }
 
-    if(!coupon){
+    if(!coupon) {
         return next(new HttpError('Could not find a coupon with specified ID', 404));
     }
 
@@ -137,3 +148,4 @@ exports.getCouponsByUserId = getCouponsByUserId;
 exports.createCoupon = createCoupon;
 exports.updateCouponById = updateCouponById;
 exports.deleteCouponById = deleteCouponById;
+exports.getCoupons = getCoupons;

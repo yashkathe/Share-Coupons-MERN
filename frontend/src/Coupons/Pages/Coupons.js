@@ -1,61 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import CouponItem from "../Components/CouponItem";
+import ErrorModal from "../../Shared/UI/ErrorModal";
+import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 
 import styles from "./Coupons.module.css";
 
-const DUMMY_COUPONS = [ {
-    id: "c1",
-    title: "50% on any product",
-    couponCode: "12345",
-    company: "Amazon",
-    image: "https://play-lh.googleusercontent.com/G7jAks-PRl4d7IkL-s3Ir44nGyPq0Yh872N5UMwZYIJz4wG1Oj0DqoQjsAR5ddKZbQ",
-    expirationDate: new Date("22 Aug 2023").toLocaleDateString()
-},
-{
-    id: "c2",
-    title: "50% on any product",
-    couponCode: "12345",
-    company: "Amazon",
-    image: "https://play-lh.googleusercontent.com/G7jAks-PRl4d7IkL-s3Ir44nGyPq0Yh872N5UMwZYIJz4wG1Oj0DqoQjsAR5ddKZbQ",
-    expirationDate: new Date("22 Aug 2023").toLocaleDateString()
-},
-{
-    id: "c3",
-    title: "50% on any product",
-    couponCode: "12345",
-    company: "Amazon",
-    image: "https://play-lh.googleusercontent.com/G7jAks-PRl4d7IkL-s3Ir44nGyPq0Yh872N5UMwZYIJz4wG1Oj0DqoQjsAR5ddKZbQ",
-    expirationDate: new Date("22 Aug 2023").toLocaleDateString()
-},
-{
-    id: "c4",
-    title: "50% on any product",
-    couponCode: "12345",
-    company: "Amazon",
-    image: "https://play-lh.googleusercontent.com/G7jAks-PRl4d7IkL-s3Ir44nGyPq0Yh872N5UMwZYIJz4wG1Oj0DqoQjsAR5ddKZbQ",
-    expirationDate: new Date("22 Aug 2023").toLocaleDateString()
-}
-];
+import { useHttpClient } from "../../Hooks/useHttpHook";
 
 const Coupons = () => {
-    return (
-        <li className={ styles.coupon__list }>
-            {
-                DUMMY_COUPONS.map(coupon => (
-                    <CouponItem
-                        key={ coupon.id }
-                        image={ coupon.image }
-                        alt={ coupon.company }
-                        couponCode={ coupon.couponCode }
-                        title={ coupon.title }
-                        company={ coupon.company }
-                        expirationDate={ coupon.expirationDate }
-                    />
-                ))
 
-            }
-        </li>
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const [ loadedData, setLoadedData ] = useState();
+
+    useEffect(() => {
+        const fetchCoupons = async () => {
+            try {
+                const responseData = await sendRequest(
+                    'http://localhost:5000/api/coupons'
+                );
+
+                setLoadedData(responseData.coupons);
+            } catch(err) {}
+        };
+        fetchCoupons();
+    }, [ sendRequest ]);
+
+    const viewHandler = () => {
+        console.log("view");
+    };
+
+    const editHandler = () => {
+        console.log("edit");
+    };
+
+    const deleteHandler = () => {
+        console.log("delete");
+    };
+
+    return (
+        <React.Fragment>
+            { isLoading && <LoadingSpinner asOverlay /> }
+            { error && <ErrorModal errorMessage={ error } onClick={ clearError } /> }
+            { !isLoading && loadedData && (
+                <li className={ styles.coupon__list }>
+                    {
+                        loadedData.map(coupon => (
+                            <CouponItem
+                                data={ loadedData }
+                                key={ coupon.id }
+                                title={ coupon.title }
+                                company={ coupon.company }
+                                expirationDate={ coupon.expirationDate }
+                                onView={ viewHandler }
+                                onEdit={ editHandler }
+                                onDelete={ deleteHandler }
+                            />
+                        )) }
+                </li>) }
+        </React.Fragment>
     );
 };
 

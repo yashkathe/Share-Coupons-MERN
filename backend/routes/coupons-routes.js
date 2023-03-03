@@ -9,6 +9,8 @@ router.get('/:couponId', couponsController.getCouponById);
 
 router.get('/user/:userId', couponsController.getCouponsByUserId);
 
+router.get('/', couponsController.getCoupons);
+
 router.post(
     '/', [
     check('title')
