@@ -50,7 +50,7 @@ const getCouponsByUserId = async (req, res, next) => {
 
     // console.log(coupons)
 
-    res.json({ coupon: coupons.map(coupon => coupon.toObject({ getters: true })) });
+    res.json({ coupons: coupons.map(coupon => coupon.toObject({ getters: true })) });
 };
 
 const createCoupon = async (req, res, next) => {

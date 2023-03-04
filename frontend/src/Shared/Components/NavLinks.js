@@ -21,6 +21,11 @@ const NavLinks = () => {
                     Add Coupons
                 </NavLink>
             </li>) }
+            { auth.isLoggedIn && (<li>
+                <NavLink activeClassName={ styles.active } to={ `/${auth.userId}/coupons` } exact>
+                    My Coupons
+                </NavLink>
+            </li>) }
             { !auth.isLoggedIn && (<li>
                 <NavLink activeClassName={ styles.active } to="/authentication/signin" exact>
                     Authentication
