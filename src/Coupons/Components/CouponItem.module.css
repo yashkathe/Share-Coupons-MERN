@@ -5,7 +5,7 @@
     margin: 1rem;
     min-height: 25vh;
     box-shadow: 3px 3px 20px 0px rgb(49, 48, 48);
-    transition: 200ms;
+    transition: 500ms;
     padding: 1rem 1rem 0 1rem;
     border-radius: 30px;
 }
@@ -13,26 +13,32 @@
 .card:hover {
     transition: 300ms;
     box-shadow: 0px 0px 10px 5px #7371ff;
+    transition: 500ms;
 }
 
 .card:hover .buttons {
     border-top: 1px solid #7371ff;
+    transition: 500ms;
 }
 
 .card:hover .couponItem__code>h1 {
     color: #7371ff;
+    transition: 500ms;
 }
 
 .card:hover .couponItem__info p {
     color: rgba(241, 241, 241, 0.8);
+    transition: 500ms;
 }
 
 .card:hover .couponItem__info h4 {
     color: rgba(241, 241, 241, 0.8);
+    transition: 500ms;
 }
 
 .card:hover .buttons>button {
     color: #7371ff;
+    transition: 200ms;
 }
 
 .couponItem__code {
