@@ -6,6 +6,7 @@ import Signin from "./Autentication/Pages/Signin";
 import Signup from "./Autentication/Pages/Signup";
 import AddCoupons from "./Coupons/Pages/AddCoupons";
 import UserCoupons from "./Coupons/Pages/UserCoupons";
+import UpdateCoupon from "./Coupons/Pages/UpdateCoupon";
 import Header from "./Shared/Components/Header";
 
 import { AuthContext } from "./Shared/Context/auth-context";
@@ -40,6 +41,9 @@ const App = () => {
                 </Route>
                 <Route path="/coupon/new" exact>
                     <AddCoupons />
+                </Route>
+                <Route path="/coupon/:couponId" exact>
+                    <UpdateCoupon/>
                 </Route>
                 <Redirect to="/" />
             </Switch>

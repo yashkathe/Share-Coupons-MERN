@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import Card from "../../Shared/UI/Card";
 
@@ -31,7 +32,7 @@ const CouponItem = (props) => {
             </div>
             <div className={ styles.buttons }>
                 <button onClick={ props.onView } >VIEW</button>
-                <button onClick={ props.onEdit }>EDIT</button>
+                <Link to={`/coupon/${props.couponId}`}>EDIT</Link>
                 <button onClick={ props.onDelete }>DELETE</button>
             </div>
         </Card>

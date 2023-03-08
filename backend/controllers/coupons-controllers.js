@@ -103,7 +103,7 @@ const updateCouponById = async (req, res, next) => {
     if(!errors.isEmpty()) {
         throw new HttpError('Invalid inputs passed', 422);
     }
-    const { title, description } = req.body;
+    const { title, description, couponCode, company, expirationDate } = req.body;
     const couponId = req.params.couponId;
 
     let coupon;
@@ -115,10 +115,13 @@ const updateCouponById = async (req, res, next) => {
 
     coupon.title = title;
     coupon.description = description;
+    coupon.couponCode = couponCode
+    coupon.company = company
+    coupon.expirationDate = expirationDate
 
     try {
         await coupon.save();
-    } catch {
+    } catch(err) {
         return next(new HttpError('Could not update a coupon with specified ID', 500));
     }
 
