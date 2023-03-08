@@ -31,10 +31,6 @@ const UserCoupons = () => {
         console.log("view");
     };
 
-    const editHandler = () => {
-        console.log("edit");
-    };
-
     const deleteHandler = () => {
         console.log("delete");
     };
@@ -50,11 +46,11 @@ const UserCoupons = () => {
                             <CouponItem
                                 data={ loadedData }
                                 key={ coupon.id }
+                                couponId={coupon.id}
                                 title={ coupon.title }
                                 company={ coupon.company }
                                 expirationDate={ coupon.expirationDate }
                                 onView={ viewHandler }
-                                onEdit={ editHandler }
                                 onDelete={ deleteHandler }
                             />
                         )) }

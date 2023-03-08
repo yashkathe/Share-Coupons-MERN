@@ -34,7 +34,6 @@ const AddCoupons = () => {
         } catch(err) {
             console.log(err);
         }
-
     };
 
     return (
