@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import Card from "../../Shared/UI/Card";
 import SignInForm from "../Components/SignInForm";
-import ErrorModal from "../../Shared/UI/ErrorModal";
+import Modal from "../../Shared/UI/Modal";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 
 import { useHttpClient } from "../../Hooks/useHttpHook";
@@ -33,7 +33,7 @@ const Signin = () => {
 
     return (
         <Card className={ styles.card }  >
-            { error && <ErrorModal errorMessage={ error } onClick={ clearError } /> }
+            { error && <Modal errorMessage={ error } onClick={ clearError }/> }
             { isLoading && <LoadingSpinner asOverlay /> }
             <div className={ styles.header }>
                 <h1>Sign in</h1>

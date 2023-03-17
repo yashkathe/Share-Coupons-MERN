@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 
-import CouponItem from "../Components/CouponItem";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
-import ErrorModal from "../../Shared/UI/ErrorModal";
+import Modal from "../../Shared/UI/Modal";
+import CouponList from "../Components/CouponList";
 
 import { useHttpClient } from "../../Hooks/useHttpHook";
-
-import styles from "./Coupons.module.css";
 
 const UserCoupons = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -26,35 +24,11 @@ const UserCoupons = () => {
         fetchCoupons();
     }, [ sendRequest, userId ]);
 
-
-    const viewHandler = () => {
-        console.log("view");
-    };
-
-    const deleteHandler = () => {
-        console.log("delete");
-    };
-
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <ErrorModal errorMessage={ error } onClick={ clearError } /> }
-            { !isLoading && loadedData && (
-                <li className={ styles.coupon__list }>
-                    {
-                        loadedData.map(coupon => (
-                            <CouponItem
-                                data={ loadedData }
-                                key={ coupon.id }
-                                couponId={coupon.id}
-                                title={ coupon.title }
-                                company={ coupon.company }
-                                expirationDate={ coupon.expirationDate }
-                                onView={ viewHandler }
-                                onDelete={ deleteHandler }
-                            />
-                        )) }
-                </li>) }
+            { error && <Modal paraMessage={ error } onClick={ clearError } /> }
+            { !isLoading && loadedData && (<CouponList items={ loadedData } />) }
         </React.Fragment>
     );
 };
