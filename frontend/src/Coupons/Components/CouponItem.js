@@ -22,7 +22,7 @@ const CouponItem = (props) => {
         setShowDeleteModal(false);
         try {
             await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`, 'DELETE');
-            props.onDeleteCoupon(props.couponId)
+            props.onDeleteCoupon(props.couponId);
         } catch(err) { console.log(err); }
     };
 
@@ -52,8 +52,8 @@ const CouponItem = (props) => {
                 </div>
                 <div className={ styles.buttons }>
                     <button onClick={ props.onView } >VIEW</button>
-                    <Link to={ `/coupon/${props.couponId}` }>EDIT</Link>
-                    <button onClick={ deleteHandler }>DELETE</button>
+                    { props.showAdminButtons && (<Link to={ `/coupon/${props.couponId}` }>EDIT</Link>) }
+                    { props.showAdminButtons && (<button onClick={ deleteHandler }>DELETE</button>) }
                 </div>
             </Card>
         </React.Fragment>

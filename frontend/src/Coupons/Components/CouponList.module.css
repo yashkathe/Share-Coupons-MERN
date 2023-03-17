@@ -1,4 +1,4 @@
-.coupon__list{
+.coupon__list {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -6,7 +6,32 @@
     flex-wrap: wrap;
 }
 
-.error_card{
-    color: aliceblue;
+.error_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    color: rgba(241, 241, 241, 0.8);
     font: 5rem;
+    background-color: #21262d;
+    margin: 10% 25% 20% 25%;
+    text-align: center;
+    height: 20vh;
+    /* box-shadow: 0px 0px 5px #7371ff; */
+}
+
+.error_card>a {
+    text-decoration: none;
+    padding: 7px 12px;
+    border: 1px solid #7371ff;
+    border-radius: 15px;
+    color: #b8b8b8;
+}
+
+.error_card>a:hover {
+    color: #7371ff;
+}
+
+.error_card>a:hover + .error_card{
+    box-shadow: 4px 2px 8px #7371ff;
 }
