@@ -10,7 +10,7 @@ const Modal = (props) => {
         ReactDOM.createPortal(
             <React.Fragment>
                 <Card className={ styles.modal }>
-                    <h1>{props.headerMessage}</h1>
+                    <h1>{ props.headerMessage || 'Error' }</h1>
                     <p>{ props.paraMessage }</p>
                     { props.showButtons && (
                         <div className={ styles.buttons }>

@@ -83,7 +83,7 @@ const UpdateCoupon = () => {
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <ErrorModal errorMessage={ error } onClick={ clearError } /> }
+            { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
             { !isLoading && data && (
                 <Card className={ styles.card }>
                     <form onSubmit={ updateCouponHandler }>

@@ -24,11 +24,15 @@ const UserCoupons = () => {
         fetchCoupons();
     }, [ sendRequest, userId ]);
 
+    const onDeleteCoupon = (deletedCouponId) => {
+        setLoadedData(prevCoupons => prevCoupons.filter(coupon => coupon.id !== deletedCouponId ))
+    }
+
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <Modal paraMessage={ error } onClick={ clearError } /> }
-            { !isLoading && loadedData && (<CouponList items={ loadedData } />) }
+            { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+            { !isLoading && loadedData && (<CouponList items={ loadedData } onDeleteCoupon={onDeleteCoupon}/>) }
         </React.Fragment>
     );
 };

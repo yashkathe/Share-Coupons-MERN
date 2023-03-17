@@ -15,6 +15,7 @@ const CouponList = (props) => {
                         title={ item.title }
                         company={ item.company }
                         expirationDate={ item.expirationDate }
+                        onDeleteCoupon={props.onDeleteCoupon}
                     />
                 )) }
         </li>

@@ -27,7 +27,7 @@ const Coupons = () => {
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <ErrorModal errorMessage={ error } onClick={ clearError } /> }
+            { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
             { !isLoading && loadedData && (<CouponList items={ loadedData } />) }
         </React.Fragment>
     );

@@ -28,7 +28,7 @@ const Signup = () => {
 
     return (
         <Card className={ styles.card }>
-            { error && <Modal errorMessage={ error } onClick={ clearError } /> }
+            { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
             { isLoading && <LoadingSpinner asOverlay /> }
             <div className={ styles.header }>
                 <h1>Sign up</h1>
