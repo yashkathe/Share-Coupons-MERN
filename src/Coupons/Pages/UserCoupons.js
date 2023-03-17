@@ -19,7 +19,7 @@ const UserCoupons = () => {
             try {
                 const responseData = await sendRequest(`http://localhost:5000/api/coupons/user/${userId}`);
                 setLoadedData(responseData.coupons);
-            } catch(err) { console.log(err); }
+            } catch(err) {}
         };
         fetchCoupons();
     }, [ sendRequest, userId ]);
@@ -32,7 +32,7 @@ const UserCoupons = () => {
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
             { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
-            { !isLoading && loadedData && (<CouponList items={ loadedData } onDeleteCoupon={onDeleteCoupon}/>) }
+            { !isLoading && loadedData && (<CouponList items={ loadedData } onDeleteCoupon={onDeleteCoupon} showAdminButtons={true}/>) }
         </React.Fragment>
     );
 };
