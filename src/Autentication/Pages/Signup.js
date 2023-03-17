@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import SignupForm from "../Components/SignupForm";
 import Card from "../../Shared/UI/Card";
-import ErrorModal from "../../Shared/UI/ErrorModal";
+import Modal from "../../Shared/UI/Modal";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 
 import styles from "./Auth.module.css";
@@ -28,7 +28,7 @@ const Signup = () => {
 
     return (
         <Card className={ styles.card }>
-            { error && <ErrorModal errorMessage={ error } onClick={ clearError } /> }
+            { error && <Modal errorMessage={ error } onClick={ clearError } /> }
             { isLoading && <LoadingSpinner asOverlay /> }
             <div className={ styles.header }>
                 <h1>Sign up</h1>

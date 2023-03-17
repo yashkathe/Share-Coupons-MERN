@@ -7,35 +7,27 @@ import styles from "./CouponItem.module.css";
 
 const CouponItem = (props) => {
 
-    if(props.data.length === 0) {
-        return (
-            <Card className={ styles.card }>
-                <div className={ styles.couponItem__code }>
-                    <h1> No cards found !</h1>
-                </div>
-            </Card>
-        );
+    const deleteHandler = () => {
+        console.log('delete')
     }
 
     return (
-        <Card className={ styles.card }>
-            <div className={ styles.couponItem__code }>
-                <h1> { props.title } !</h1>
-            </div>
-            <div className={ styles.couponItem__info }>
-                <div>
-                    <p>FROM:</p><h4> { props.company }</h4>
+        <React.Fragment>
+            <Card className={ styles.card }>
+                <div className={ styles.couponItem__code }>
+                    <h1> { props.title } !</h1>
                 </div>
-                <div>
+                <div className={ styles.couponItem__info }>
+                    <p>FROM:</p><h4> { props.company }</h4>
                     <p>EXPIRES:</p><h4>   { props.expirationDate }</h4>
                 </div>
-            </div>
-            <div className={ styles.buttons }>
-                <button onClick={ props.onView } >VIEW</button>
-                <Link to={`/coupon/${props.couponId}`}>EDIT</Link>
-                <button onClick={ props.onDelete }>DELETE</button>
-            </div>
-        </Card>
+                <div className={ styles.buttons }>
+                    <button onClick={ props.onView } >VIEW</button>
+                    <Link to={ `/coupon/${props.couponId}` }>EDIT</Link>
+                    <button onClick={ deleteHandler }>DELETE</button>
+                </div>
+            </Card>
+        </React.Fragment>
     );
 };
 

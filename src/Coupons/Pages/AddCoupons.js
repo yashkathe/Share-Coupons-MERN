@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import Card from "../../Shared/UI/Card";
 import AddCouponForm from "../Components/AddCouponForm";
-import ErrorModal from "../../Shared/UI/ErrorModal";
+import ErrorModal from "../../Shared/UI/Modal";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 
 import { useHttpClient } from "../../Hooks/useHttpHook";
