@@ -26,17 +26,14 @@
     transition: 500ms;
 }
 
-.card:hover .couponItem__info p {
-    color: rgba(241, 241, 241, 0.8);
-    transition: 500ms;
-}
-
+.card:hover .couponItem__info p,
 .card:hover .couponItem__info h4 {
     color: rgba(241, 241, 241, 0.8);
     transition: 500ms;
 }
 
-.card:hover .buttons>button {
+.card:hover .buttons>button,
+.card:hover .buttons>a {
     color: #7371ff;
     transition: 200ms;
 }
@@ -89,6 +86,12 @@
     width: 100%;
 }
 
+@media(max-width:81rem) {
+    .couponItem__info {
+        flex-direction: column;
+        justify-content: space-around;
+    }
+}
 
 .couponItem__info p {
     position: relative;
@@ -101,7 +104,6 @@
 }
 
 /* remove default styles*/
-
 .buttons>button {
     background: none;
     color: inherit;
@@ -121,7 +123,8 @@
     margin: 0 -1rem 0 -1rem;
 }
 
-.buttons>button {
+.buttons>button,
+.buttons>a {
     text-decoration: none;
     padding: 7px 12px;
     border: 1px solid #7371ff;
@@ -130,9 +133,18 @@
 }
 
 .card:hover .buttons>button:hover,
-.card:hover .buttons>button:active{
-    box-sizing: border-box;
+.card:hover .buttons>button:active,
+.card:hover .buttons>a:hover,
+.card:hover .buttons>a:active {
     background: #7371ff;
-    color:rgba(241, 241, 241, 0.8);
+    color: rgba(241, 241, 241, 0.8);
     border: 1px solid #919191;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none;
+    color: inherit;
 }
