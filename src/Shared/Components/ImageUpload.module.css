@@ -1,0 +1,47 @@
+.parentDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.parentDiv button {
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    font-size: 1.4rem;
+}
+
+.parentDiv button {
+    text-decoration: none;
+    padding: 7px 12px;
+    border: 2px solid #7371ff;
+    border-radius: 15px;
+    color: #757575;
+    margin-top: 1rem;
+}
+
+.parentDiv button:hover {
+    color: rgba(241, 241, 241, 0.8);
+    color: #7371ff;
+}
+
+.image-upload__preview {
+    width: 13rem;
+    height: 13rem;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.image-upload__preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
