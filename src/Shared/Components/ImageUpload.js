@@ -55,7 +55,7 @@ const ImageUpload = (props) => {
             />
             <div className={ styles[ 'parentDiv' ] }>
                 {
-                    previewUrl && (
+                    previewUrl && props.preview &&(
                         <div className={ styles[ 'image-upload__preview' ] }>
                             <img src={ previewUrl } alt="preview" />
                         </div>
