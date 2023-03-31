@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -9,6 +12,10 @@ const HttpError = require('./models/http-error');
 const app = express();
 
 app.use(bodyParser.json());
+
+//middle for requests that start with /uploads/images
+//static serving means you just return a file 
+app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,6 +36,11 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
+    if(req.file) {
+        fs.unlink(req.file.path, (err) => {
+            console.log(err);
+        });
+    }
     if(res.headerSend) {
         // check if response is already sent
         return next(error);
@@ -38,10 +50,11 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
+    .set('strictQuery', false)
     .connect(process.env.MONGO_URI)
     .then(() => {
         app.listen(5000);
-        console.log(`Server started on port 5000 `)
+        console.log(`Server started on port 5000 `);
     })
     .catch(err => {
         console.log(err);

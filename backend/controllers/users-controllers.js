@@ -25,8 +25,6 @@ const signup = async (req, res, next) => {
     }
     const { email, password } = req.body;
 
-    console.log(email, password);
-
     let existingUser;
     try {
         existingUser = await User.findOne({ email: email });
@@ -41,6 +39,7 @@ const signup = async (req, res, next) => {
     const createdUser = new User({
         email,
         password,
+        image: req.file.path,
         coupons: []
     });
 
@@ -56,8 +55,6 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
-
-    console.log(email, password)
 
     let existingUser;
     try {

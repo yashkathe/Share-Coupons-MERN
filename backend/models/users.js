@@ -11,7 +11,7 @@ const userSchema = new Schema({
     password:
         { type: String, required: true, minlength: 5 },
     image:
-        { type: String, required: false },
+        { type: String, required: true },
     coupons:
         [ { type: mongoose.Types.ObjectId, required: true, ref: 'Coupon' } ]
 });

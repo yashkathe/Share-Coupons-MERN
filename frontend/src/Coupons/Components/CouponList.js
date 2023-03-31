@@ -8,8 +8,6 @@ import styles from './CouponList.module.css';
 
 const CouponList = (props) => {
 
-    console.log(props.items.length);
-
     if(props.items.length === 0) {
         return (
             <Card className={ styles.error_card }>

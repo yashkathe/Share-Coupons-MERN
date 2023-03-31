@@ -19,8 +19,7 @@ const Signup = () => {
             await sendRequest(
                 'http://localhost:5000/api/users/signup',
                 'POST',
-                JSON.stringify(userData),
-                { 'Content-Type': 'application/json' });
+                userData);
         } catch(err) {
             console.log(err)
         }

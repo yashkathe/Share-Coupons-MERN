@@ -29,16 +29,15 @@ const SignupForm = (props) => {
     }
 
     const submitHandler = async (event) => {
+        
         event.preventDefault();
 
-        console.log(profileImage)
+        const formData = new FormData()
+        formData.append('email', emailID)
+        formData.append('password', password)
+        formData.append('image', profileImage)
 
-        const user = {
-            email: emailID,
-            password
-        };
-
-        props.onSigningUp(user);
+        props.onSigningUp(formData);
         setEmailID('');
         setPassword('');
         setConfirmPassword('');
@@ -50,7 +49,7 @@ const SignupForm = (props) => {
             <FormLabel name="email" label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
             <FormLabel name="password" label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
             <FormLabel name="confirmPassword" label="Confirm Password" type="password" changeHandler={ confirmPasswordChangeHandler } value={ confirmPassword } required={ true } min="8" max="12" />
-            <ImageUpload id="image" onInput={profileImageHandler}/>
+            <ImageUpload id="image" onInput={profileImageHandler} preview={profileImage}/>
             <div className={ styles.form_element }>
                 <button type="submit" >SIGN UP</button>
             </div>
