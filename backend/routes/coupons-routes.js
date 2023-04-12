@@ -13,7 +13,7 @@ router.get('/user/:userId', couponsController.getCouponsByUserId);
 
 router.get('/', couponsController.getCoupons);
 
-// router.use(checkAuth)
+router.use(checkAuth)
 
 router.post(
     '/', [
