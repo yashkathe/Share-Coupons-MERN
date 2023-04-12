@@ -1,15 +1,19 @@
 const express = require('express');
 const { check } = require('express-validator');
 
+const couponsController = require('../controllers/coupons-controllers');
+const checkAuth = require('../middleware/check-auth')
+
 const router = express.Router();
 
-const couponsController = require('../controllers/coupons-controllers');
 
 router.get('/:couponId', couponsController.getCouponById);
 
 router.get('/user/:userId', couponsController.getCouponsByUserId);
 
 router.get('/', couponsController.getCoupons);
+
+// router.use(checkAuth)
 
 router.post(
     '/', [
