@@ -111,6 +111,10 @@ const updateCouponById = async (req, res, next) => {
         return next(new HttpError('Could not update a coupon with specified ID', 500));
     }
 
+    if (coupon.creator.toString() != req.userData.userId){
+        return next(new HttpError('Not allowed to edit this place', 403));
+    }
+
     coupon.title = title;
     coupon.description = description;
     coupon.couponCode = couponCode
@@ -139,6 +143,10 @@ const deleteCouponById = async (req, res, next) => {
 
     if(!coupon) {
         return next(new HttpError('Could not find a coupon with specified ID', 404));
+    }
+
+    if(coupon.creator.id !== req.userData.userId){
+        return next(new HttpError('Not allowed to delete this place', 403));
     }
 
     res.status(200).json({ coupon: coupon.toObject({ getters: true }), message: "Coupon deleted successfully" });
