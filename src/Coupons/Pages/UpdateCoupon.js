@@ -14,7 +14,7 @@ import Card from "../../Shared/UI/Card";
 const UpdateCoupon = () => {
     const [ coupon, setCoupon ] = useState();
 
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext);
 
     const titleChangeHandler = (event) => {
         setCoupon({
@@ -51,8 +51,8 @@ const UpdateCoupon = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     const couponId = useParams().couponId;
-    const userId = auth.userId
-    const history = useHistory()
+    const userId = auth.userId;
+    const history = useHistory();
 
     useEffect(() => {
         const fetchCoupon = async () => {
@@ -72,7 +72,10 @@ const UpdateCoupon = () => {
                 `http://localhost:5000/api/coupons/${couponId}`,
                 'PATCH',
                 JSON.stringify(coupon),
-                { 'Content-Type': 'application/json' }
+                {
+                    'Content-Type': 'application/json',
+                    'authorization': 'Bearer ' + auth.token  
+                }
             );
             history.push(`/${userId}/coupons`);
         } catch(err) {
@@ -88,7 +91,7 @@ const UpdateCoupon = () => {
                 <Card className={ styles.card }>
                     <form onSubmit={ updateCouponHandler }>
                         <FormLabel label="Title" type="text" changeHandler={ titleChangeHandler } value={ coupon.title } required={ true } />
-                        <FormLabel label="Description" type="text" changeHandler={ descriptionChangeHandler } value={ coupon.description } minLength="5"/>
+                        <FormLabel label="Description" type="text" changeHandler={ descriptionChangeHandler } value={ coupon.description } minLength="5" />
                         <FormLabel label="coupon Code" type="text" changeHandler={ couponChangeHandler } value={ coupon.couponCode } required={ true } />
                         <FormLabel label="Company" type="text" changeHandler={ companyChangeHandler } value={ coupon.company } required={ true } />
                         <FormLabel label="Expiration Date" type="date" changeHandler={ dateChangeHandler } value={ coupon.expirationDate } />

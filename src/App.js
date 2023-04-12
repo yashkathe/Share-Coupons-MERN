@@ -15,35 +15,35 @@ import styles from './App.module.css';
 
 const App = () => {
 
-    const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+    const [ token, setToken ] = useState(null);
     const [ userId, setUserId ] = useState(false);
 
-    const login = useCallback((uid) => {
-        setIsLoggedIn(true);
+    const login = useCallback((uid, token) => {
+        setToken(token);
         setUserId(uid);
     }, []);
 
     const logout = useCallback(() => {
-        setIsLoggedIn(false);
+        setToken(null);
         setUserId(null);
     }, []);
 
     let routes;
 
-    if(isLoggedIn) {
+    if(token) {
         routes = (
             <Switch>
                 <Route path="/" exact>
                     <Coupons />
                 </Route>
                 <Route path="/:userId/coupons" exact>
-                    <UserCoupons/>
+                    <UserCoupons />
                 </Route>
                 <Route path="/coupon/new" exact>
                     <AddCoupons />
                 </Route>
                 <Route path="/coupon/:couponId" exact>
-                    <UpdateCoupon/>
+                    <UpdateCoupon />
                 </Route>
                 <Redirect to="/" />
             </Switch>
@@ -66,7 +66,14 @@ const App = () => {
     }
 
     return (
-        <AuthContext.Provider value={ { isLoggedIn, userId, login, logout } } >
+        <AuthContext.Provider
+            value={ {
+                isLoggedIn: !!token,
+                token:token,
+                userId,
+                login,
+                logout
+            } } >
             <Router>
                 <Header />
                 <main className={ styles.main }>

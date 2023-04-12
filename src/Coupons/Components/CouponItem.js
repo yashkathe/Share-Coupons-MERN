@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 
 import Card from "../../Shared/UI/Card";
 import Modal from "../../Shared/UI/Modal";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 
+import { AuthContext } from "../../Shared/Context/auth-context";
 import { useHttpClient } from "../../Hooks/useHttpHook";
 
 import styles from "./CouponItem.module.css";
 
 const CouponItem = (props) => {
 
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const auth = useContext(AuthContext)
 
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [ showDeleteModal, setShowDeleteModal ] = useState(false);
 
     const deleteHandler = () => { setShowDeleteModal(true); };
@@ -21,7 +23,12 @@ const CouponItem = (props) => {
     const confirmDeleteHandler = async () => {
         setShowDeleteModal(false);
         try {
-            await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`, 'DELETE');
+            await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`,
+             'DELETE',
+             null,
+             {
+                'authorization' : 'Bearer ' + auth.token
+             });
             props.onDeleteCoupon(props.couponId);
         } catch(err) { console.log(err); }
     };

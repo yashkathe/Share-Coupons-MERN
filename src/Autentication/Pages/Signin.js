@@ -25,7 +25,7 @@ const Signin = () => {
                 'POST',
                 JSON.stringify(userData),
                 { 'Content-Type': 'application/json' });
-            auth.login(responseData.user.id);
+            auth.login(responseData.userId, responseData.token);
         } catch(err) {
             console.log(err);
         }
@@ -33,7 +33,7 @@ const Signin = () => {
 
     return (
         <Card className={ styles.card }  >
-            { error && <Modal  paraMessage={ error } onBackdropClick={ clearError }/> }
+            { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
             { isLoading && <LoadingSpinner asOverlay /> }
             <div className={ styles.header }>
                 <h1>Sign in</h1>

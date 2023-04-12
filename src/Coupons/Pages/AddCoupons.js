@@ -17,7 +17,7 @@ const AddCoupons = () => {
 
     const auth = useContext(AuthContext);
 
-    const history = useHistory()
+    const history = useHistory();
 
     const createCoupon = async (newCoupon) => {
         try {
@@ -28,9 +28,12 @@ const AddCoupons = () => {
                     ...newCoupon,
                     creator: auth.userId
                 }),
-                { 'Content-Type': 'application/json' }
+                {
+                    'Content-Type': 'application/json',
+                    'authorization': 'Bearer ' + auth.token  
+                }
             );
-            history.push('/')
+            history.push('/');
         } catch(err) {
             console.log(err);
         }
@@ -38,7 +41,7 @@ const AddCoupons = () => {
 
     return (
         <React.Fragment>
-            { error && <ErrorModal errorMessage={ error } onClick={ clearError } /> }
+            { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
             { isLoading && <LoadingSpinner asOverlay /> }
             <Card className={ styles.card }>
                 <AddCouponForm onCreateCoupon={ createCoupon } />
