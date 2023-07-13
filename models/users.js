@@ -13,7 +13,9 @@ const userSchema = new Schema({
     image:
         { type: String, required: true },
     coupons:
-        [ { type: mongoose.Types.ObjectId, required: true, ref: 'Coupon' } ]
+        [ { type: mongoose.Types.ObjectId, required: true, ref: 'Coupon' } ],
+    cart:
+        [{ type: mongoose.Types.ObjectId, required: true, ref: 'Coupon'}]
 });
 
 userSchema.plugin(uniqueValidator);
