@@ -43,6 +43,7 @@ const AddCoupons = () => {
         <React.Fragment>
             { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
             { isLoading && <LoadingSpinner asOverlay /> }
+
             <Card className={ styles.card }>
                 <AddCouponForm onCreateCoupon={ createCoupon } />
             </Card>

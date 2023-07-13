@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Card from "../../Shared/UI/Card";
 import Modal from "../../Shared/UI/Modal";
+import CouponModal from "../../Shared/UI/CouponModal";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 
 import { AuthContext } from "../../Shared/Context/auth-context";
@@ -16,6 +17,7 @@ const CouponItem = (props) => {
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [ showDeleteModal, setShowDeleteModal ] = useState(false);
+    const [showCouponModal, setShowCouponModal] = useState(false)
 
     const deleteHandler = () => { setShowDeleteModal(true); };
     const deleteHandlerfalse = () => { setShowDeleteModal(false); };
@@ -33,8 +35,13 @@ const CouponItem = (props) => {
         } catch(err) { console.log(err); }
     };
 
+    const onViewHandler = async () => {
+        setShowCouponModal(prev => !prev)
+    }
+
     return (
         <React.Fragment>
+            {showCouponModal && <CouponModal onClick={onViewHandler} />}
             { isLoading && <LoadingSpinner asOverlay /> }
             { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
             { showDeleteModal && <Modal
@@ -45,6 +52,7 @@ const CouponItem = (props) => {
                 onConfirm={ confirmDeleteHandler }
                 onConfirmMsg="DELETE"
                 onBackdropClick={ deleteHandlerfalse } /> }
+
             <Card className={ styles.card }>
                 <div className={ styles.couponItem__code }>
                     <h1> { props.title } !</h1>
@@ -58,11 +66,12 @@ const CouponItem = (props) => {
                     </div>
                 </div>
                 <div className={ styles.buttons }>
-                    <button onClick={ props.onView } >VIEW</button>
+                    <button onClick={ onViewHandler } >VIEW</button>
                     { props.showAdminButtons && (<Link to={ `/coupon/${props.couponId}` }>EDIT</Link>) }
                     { props.showAdminButtons && (<button onClick={ deleteHandler }>DELETE</button>) }
                 </div>
             </Card>
+            
         </React.Fragment>
     );
 };

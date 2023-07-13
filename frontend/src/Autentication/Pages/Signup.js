@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import SignupForm from "../Components/SignupForm";
 import Card from "../../Shared/UI/Card";
@@ -12,6 +12,8 @@ import { useHttpClient } from "../../Hooks/useHttpHook";
 
 const Signup = () => {
 
+    const history = useHistory();
+
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     const saveUserCredentials = async (userData) => {
@@ -20,23 +22,28 @@ const Signup = () => {
                 'http://localhost:5000/api/users/signup',
                 'POST',
                 userData);
+            history.push('/authentication/signin');
         } catch(err) {
-            console.log(err)
+            console.log(err);
         }
     };
 
     return (
-        <Card className={ styles.card }>
-            { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
-            { isLoading && <LoadingSpinner asOverlay /> }
+        <>
             <div className={ styles.header }>
                 <h1>Sign up</h1>
             </div>
-            <SignupForm onSigningUp={ saveUserCredentials } />
+
+            <Card className={ styles.card }>
+                { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+                { isLoading && <LoadingSpinner asOverlay /> }
+                <SignupForm onSigningUp={ saveUserCredentials } />
+            </Card>
+
             <div className={ styles.footer }>
                 <p>Already have an account ? <Link to="/authentication/signin">Sign in</Link></p>
             </div>
-        </Card>
+        </>
     );
 };
 

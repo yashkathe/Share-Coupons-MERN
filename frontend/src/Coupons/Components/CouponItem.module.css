@@ -1,9 +1,11 @@
 .card {
     background-color: #21262d;
     box-sizing: border-box;
-    width: 25vw;
+    min-width: 20vw;
+    max-width: auto;
     margin: 1rem;
-    min-height: 25vh;
+    min-height: 20vh;
+    max-height: auto;
     box-shadow: 3px 3px 20px 0px rgb(49, 48, 48);
     transition: 500ms;
     padding: 1rem 1rem 0 1rem;
@@ -28,7 +30,7 @@
 
 .card:hover .couponItem__info p,
 .card:hover .couponItem__info h4 {
-    color: rgba(241, 241, 241, 0.8);
+    color: #8d8b8b;
     transition: 500ms;
 }
 
@@ -49,7 +51,7 @@
 }
 
 .couponItem__code>h1 {
-    color: rgba(241, 241, 241, 0.8);
+    color: #8d8b8b;
 }
 
 .couponItem__code>h3 {
@@ -121,6 +123,7 @@
     border-radius: 0 0 10px 10px;
     padding: 1rem;
     margin: 0 -1rem 0 -1rem;
+    height: auto;
 }
 
 .buttons>button,

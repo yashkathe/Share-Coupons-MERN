@@ -1,3 +1,8 @@
+.form{
+    height: 100%;
+    width: 100%;
+}
+
 .form_element {
     display: flex;
     flex-direction: column;
@@ -6,7 +11,7 @@
 }
 
 .form_element button {
-    margin: 1.4rem;
+    margin: 2vh 1.5rem;
     padding: 0.6rem;
     width: 10%;
     border-radius: 1rem;

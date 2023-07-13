@@ -41,11 +41,11 @@ const getCouponsByUserId = async (req, res, next) => {
     try {
         coupons = await Coupon.find({ creator: userId });
     } catch(err) {
-        return next(new HttpError('Could not find coupons for specified User ID ', 500));
+        // return next(new HttpError('Could not find coupons for specified User ID ', 500));
     }
 
     if(!coupons || coupons.length === 0) {
-        return next(new HttpError('Could not find any coupons for specified user id', 404));
+        // return next(new HttpError('Could not find any coupons for specified user id', 404));
     }
 
     res.json({ coupons: coupons.map(coupon => coupon.toObject({ getters: true })) });

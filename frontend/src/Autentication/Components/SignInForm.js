@@ -31,15 +31,18 @@ const SignInForm = (props) => {
     };
 
     return (
-        <form onSubmit={ submitHandler }>
+        <div className={styles.form}>
+            <form onSubmit={ submitHandler } >
 
-            <FormLabel name="email" label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
-            <FormLabel name="password" label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
+                <FormLabel name="email" label="Email Address" type="email" changeHandler={ emailChangeHandler } value={ emailID } required={ true } />
+                <FormLabel name="password" label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
 
-            <div className={ styles.form_element }>
-                <button type="submit" >LOG IN</button>
-            </div>
-        </form>
+                <div className={ styles.form_element }>
+                    <button type="submit" >LOG IN</button>
+                </div>
+            </form>
+
+        </div>
     );
 };
 
