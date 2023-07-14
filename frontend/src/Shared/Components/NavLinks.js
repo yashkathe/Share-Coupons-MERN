@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 
 import { AuthContext } from "../Context/auth-context";
 
+import cartLogo from '../Icon/shopping-cart-32.png'
+
 import styles from "./NavLinks.module.css";
 
 const NavLinks = () => {
@@ -31,6 +33,13 @@ const NavLinks = () => {
                     Authentication
                 </NavLink>
             </li>) }
+            {
+                auth.isLoggedIn && (
+                    <li>
+                        <img src={cartLogo} alt="cart"/>
+                    </li>
+                )
+            }
             {
                 auth.isLoggedIn && (<li>
                     <button onClick={ auth.logout } >Logout</button>

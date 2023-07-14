@@ -11,19 +11,16 @@ const CouponModal = (props) => {
         ReactDOM.createPortal(
             <React.Fragment>
                 <div className={ styles.modal }>
-                    <h1>50% off on Jack and Jones</h1>
+                    <h1>{ props.title }</h1>
                     <p>
-                        on shopping of above rs999
+                        { props.description }
                     </p>
-                    <div className={styles.info}>
-                        <p> company: </p> <p>Jack and Jones</p>
-                        <p>expires-on: </p> <p>{"5/05/2024"}</p>
-                    </div>
-                    <div className={styles.info}>
-                        
+                    <div className={ styles.info }>
+                        <p> company: </p> <p>{ props.company }</p>
+                        <p>expires-on: </p> <p>{ props.expirationDate }</p>
                     </div>
                     <button className={ styles.button } onClick={ props.addToCart }>ADD TO CART</button>
-                    <p className={ styles.credits }> - Coupon provided by Yash Kathe</p>
+                    <p className={ styles.credits }> - Coupon provided by {props.creator}</p>
                 </div>
                 < Backdrop onClick={ props.onClick } />
             </React.Fragment>
