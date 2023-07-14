@@ -13,11 +13,12 @@ import styles from "./CouponItem.module.css";
 
 const CouponItem = (props) => {
 
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [ showDeleteModal, setShowDeleteModal ] = useState(false);
-    const [showCouponModal, setShowCouponModal] = useState(false)
+    const [ showCouponModal, setShowCouponModal ] = useState(false);
+    const [ loadedData, setLoadedData ] = useState();
 
     const deleteHandler = () => { setShowDeleteModal(true); };
     const deleteHandlerfalse = () => { setShowDeleteModal(false); };
@@ -26,24 +27,47 @@ const CouponItem = (props) => {
         setShowDeleteModal(false);
         try {
             await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`,
-             'DELETE',
-             null,
-             {
-                'authorization' : 'Bearer ' + auth.token
-             });
+                'DELETE',
+                null,
+                {
+                    'authorization': 'Bearer ' + auth.token
+                });
             props.onDeleteCoupon(props.couponId);
         } catch(err) { console.log(err); }
     };
 
     const onViewHandler = async () => {
-        setShowCouponModal(prev => !prev)
+        try {
+
+            const responseData = await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`);
+            setLoadedData(responseData);
+            setShowCouponModal(true);
+
+        } catch(err) { console.log(err); }
+
+    };
+
+    const closeViewHandler = () => {
+        setShowCouponModal(false);
+    };
+
+    const addToCartHandler = async () => {
+        console.log('added to cart')
     }
 
     return (
         <React.Fragment>
-            {showCouponModal && <CouponModal onClick={onViewHandler} />}
             { isLoading && <LoadingSpinner asOverlay /> }
             { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+            { loadedData && showCouponModal && !isLoading && (<CouponModal
+                onClick={ closeViewHandler }
+                title={ loadedData.coupon.title }
+                description={ loadedData.coupon.description }
+                company={ loadedData.coupon.company }
+                expirationDate={ loadedData.coupon.expirationDate }
+                creator={ loadedData.coupon.creator.email }
+                addToCart={addToCartHandler}
+            />) }
             { showDeleteModal && <Modal
                 headerMessage="Are you sure ?"
                 paraMessage="Do you want to proceed and delete this coupon ?"
@@ -66,12 +90,12 @@ const CouponItem = (props) => {
                     </div>
                 </div>
                 <div className={ styles.buttons }>
-                    <button onClick={ onViewHandler } >VIEW</button>
+                    <button onClick={ onViewHandler } value={ props.couponId } >VIEW</button>
                     { props.showAdminButtons && (<Link to={ `/coupon/${props.couponId}` }>EDIT</Link>) }
                     { props.showAdminButtons && (<button onClick={ deleteHandler }>DELETE</button>) }
                 </div>
             </Card>
-            
+
         </React.Fragment>
     );
 };
