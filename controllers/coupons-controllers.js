@@ -22,7 +22,7 @@ const getCouponById = async (req, res, next) => {
 
     let coupon;
     try {
-        coupon = await Coupon.findById(couponId);
+        coupon = await Coupon.findById(couponId).populate({path:"creator"});
     } catch(err) {
         return next(new HttpError('Could not find a coupon with specified ID', 500));
     }
