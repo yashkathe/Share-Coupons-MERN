@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 
+import { AnimatePresence } from "framer-motion";
+
 import Card from "../../Shared/UI/Card";
 import Modal from "../../Shared/UI/Modal";
 import CouponModal from "../../Shared/UI/CouponModal";
@@ -52,30 +54,42 @@ const CouponItem = (props) => {
     };
 
     const addToCartHandler = async () => {
-        console.log('added to cart')
-    }
+        console.log('added to cart');
+    };
 
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
-            { loadedData && showCouponModal && !isLoading && (<CouponModal
-                onClick={ closeViewHandler }
-                title={ loadedData.coupon.title }
-                description={ loadedData.coupon.description }
-                company={ loadedData.coupon.company }
-                expirationDate={ loadedData.coupon.expirationDate }
-                creator={ loadedData.coupon.creator.email }
-                addToCart={addToCartHandler}
-            />) }
-            { showDeleteModal && <Modal
-                headerMessage="Are you sure ?"
-                paraMessage="Do you want to proceed and delete this coupon ?"
-                showButtons={ true }
-                onCancel={ deleteHandlerfalse }
-                onConfirm={ confirmDeleteHandler }
-                onConfirmMsg="DELETE"
-                onBackdropClick={ deleteHandlerfalse } /> }
+            <AnimatePresence>
+                { error &&
+                    <Modal paraMessage={ error } onBackdropClick={ clearError } />
+                }
+            </AnimatePresence>
+
+            <AnimatePresence>
+                { loadedData && showCouponModal && !isLoading && (<CouponModal
+                    onClick={ closeViewHandler }
+                    title={ loadedData.coupon.title }
+                    description={ loadedData.coupon.description }
+                    company={ loadedData.coupon.company }
+                    expirationDate={ loadedData.coupon.expirationDate }
+                    creator={ loadedData.coupon.creator.email }
+                    addToCart={ addToCartHandler }
+                />) }
+            </AnimatePresence>
+
+            <AnimatePresence>
+                { showDeleteModal &&
+                    <Modal
+                        headerMessage="Are you sure ?"
+                        paraMessage="Do you want to proceed and delete this coupon ?"
+                        showButtons={ true }
+                        onCancel={ deleteHandlerfalse }
+                        onConfirm={ confirmDeleteHandler }
+                        onConfirmMsg="DELETE"
+                        onBackdropClick={ deleteHandlerfalse } />
+                }
+            </AnimatePresence>
 
             <Card className={ styles.card }>
                 <div className={ styles.couponItem__code }>

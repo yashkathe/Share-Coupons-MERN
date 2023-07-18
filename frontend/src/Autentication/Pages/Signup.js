@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useHistory } from "react-router-dom";
 
+import { AnimatePresence } from "framer-motion";
+
 import SignupForm from "../Components/SignupForm";
 import Card from "../../Shared/UI/Card";
 import Modal from "../../Shared/UI/Modal";
@@ -35,7 +37,9 @@ const Signup = () => {
             </div>
 
             <Card className={ styles.card }>
-                { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+                <AnimatePresence>
+                    { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+                </AnimatePresence>
                 { isLoading && <LoadingSpinner asOverlay /> }
                 <SignupForm onSigningUp={ saveUserCredentials } />
             </Card>

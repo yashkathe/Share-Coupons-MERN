@@ -1,4 +1,4 @@
-.modal{
+.modal {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -11,25 +11,25 @@
     box-sizing: border-box;
     background-color: #21262d;
     z-index: 15;
-    border-radius: 150px 150px 0  0;
+    border-radius: 150px 150px 0 0;
     padding: 2%;
     text-align: center;
     transition: 500ms;
 }
 
-.modal > h1{
+.modal>h1 {
     font-size: 3rem;
     color: rgba(241, 241, 241, 0.8);
     width: 100%;
 }
 
-.modal > p {
+.modal>p {
     font-size: 2rem;
     color: rgba(241, 241, 241, 0.8);
     width: 100%;
 }
 
-.info{
+.info {
     font-size: 1.5rem;
     display: flex;
     flex-direction: row;
@@ -45,16 +45,16 @@
     margin-bottom: 0;
 }
 
-.info p:nth-child(even){
+.info p:nth-child(even) {
     font-weight: 550;
     padding-left: 0.5rem;
 }
 
-.button{
-    margin-bottom:3rem;
+.button {
+    margin-bottom: 3rem;
     padding: 0.8rem 0.5rem;
     width: 20%;
-    font-size: 1.3rem; 
+    font-size: 1.3rem;
     font-weight: 750;
     text-decoration: none;
     border: 2px solid #7371ff;
@@ -66,9 +66,11 @@
 .button:hover,
 .button:active {
     cursor: pointer;
+    box-shadow: 0px 0px 10px 1px #7371ff;
+    color: rgb(241, 241, 241)
 }
 
-.credits{
+.credits {
     font-size: 1.1rem !important;
     font-style: italic;
     margin-top: 0;

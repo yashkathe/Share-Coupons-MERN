@@ -1,5 +1,7 @@
-import React, { useContext} from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
+
+import { AnimatePresence } from "framer-motion";
 
 import Card from "../../Shared/UI/Card";
 import SignInForm from "../Components/SignInForm";
@@ -13,7 +15,7 @@ import styles from "./Auth.module.css";
 
 const Signin = () => {
 
-    const auth = useContext(AuthContext)
+    const auth = useContext(AuthContext);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -38,7 +40,9 @@ const Signin = () => {
             </div>
 
             <Card className={ styles.card }  >
-                { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+                <AnimatePresence>
+                    { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+                </AnimatePresence>
                 { isLoading && <LoadingSpinner asOverlay /> }
                 <SignInForm onSigningIn={ logUserIn } />
             </Card>

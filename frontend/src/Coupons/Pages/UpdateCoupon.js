@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from "react-router-dom";
 
+import { AnimatePresence } from "framer-motion";
+
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 import ErrorModal from "../../Shared/UI/Modal";
 import FormLabel from "../../Shared/Components/FormLabel";
@@ -74,7 +76,7 @@ const UpdateCoupon = () => {
                 JSON.stringify(coupon),
                 {
                     'Content-Type': 'application/json',
-                    'authorization': 'Bearer ' + auth.token  
+                    'authorization': 'Bearer ' + auth.token
                 }
             );
             history.push(`/${userId}/coupons`);
@@ -86,7 +88,9 @@ const UpdateCoupon = () => {
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
+            <AnimatePresence>
+                { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
+            </AnimatePresence>
             { !isLoading && data && (
                 <Card className={ styles.card }>
                     <form onSubmit={ updateCouponHandler }>
