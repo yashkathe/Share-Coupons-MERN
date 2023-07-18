@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 
+import { AnimatePresence } from "framer-motion";
+
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 import CouponList from "../Components/CouponList";
 import Modal from "../../Shared/UI/Modal";
@@ -31,7 +33,9 @@ const UserCoupons = () => {
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+            <AnimatePresence>
+                { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+            </AnimatePresence>
             { !isLoading && loadedData && (<CouponList items={ loadedData } onDeleteCoupon={ onDeleteCoupon } showAdminButtons={ true } />) }
         </React.Fragment>
     );

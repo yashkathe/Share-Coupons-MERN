@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
 
+import { AnimatePresence } from "framer-motion";
+
 import Card from "../../Shared/UI/Card";
 import AddCouponForm from "../Components/AddCouponForm";
 import ErrorModal from "../../Shared/UI/Modal";
@@ -30,7 +32,7 @@ const AddCoupons = () => {
                 }),
                 {
                     'Content-Type': 'application/json',
-                    'authorization': 'Bearer ' + auth.token  
+                    'authorization': 'Bearer ' + auth.token
                 }
             );
             history.push('/');
@@ -41,7 +43,9 @@ const AddCoupons = () => {
 
     return (
         <React.Fragment>
-            { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
+            <AnimatePresence>
+                { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
+            </AnimatePresence>
             { isLoading && <LoadingSpinner asOverlay /> }
 
             <Card className={ styles.card }>

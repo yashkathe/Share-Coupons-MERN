@@ -1,15 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Backdrop from "./Backdrop";
-import Card from "./Card";
+
+import { motion } from "framer-motion";
 
 import styles from './Modal.module.css';
 
 const Modal = (props) => {
+
+    const modalVariants = {
+        initial: {
+            y: '-50vh'
+        },
+        animate: {
+            y: '0vh',
+            transition: { type: "tween" }
+        },
+        exit: {
+            y: '-60vh'
+        }
+    };
+
     return (
         ReactDOM.createPortal(
             <React.Fragment>
-                <Card className={ styles.modal }>
+                <motion.div
+                    className={ styles.modal }
+                    variants={ modalVariants }
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                >
                     <h1>{ props.headerMessage || 'Error' }</h1>
                     <p>{ props.paraMessage }</p>
                     { props.showButtons && (
@@ -18,7 +39,7 @@ const Modal = (props) => {
                             <button onClick={ props.onConfirm }>{ props.onConfirmMsg }</button>
                         </div>
                     ) }
-                </Card>
+                </motion.div>
                 <Backdrop onClick={ props.onBackdropClick } />
             </React.Fragment>
             , document.getElementById("modal-root"))

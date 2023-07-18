@@ -1,18 +1,23 @@
-.modal {
-    z-index: 11;
+.modal{
+
+    z-index: 100;
+    width: 100%;
+    position: fixed;
+    top: 20vh;
+    left: 25%;
+    transform: translate(-50%, 0);
     height: 35vh;
     width: 45vw;
-    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     text-align: center;
-    top: 20vh;
-    left: 50%;
-    transform: translate(-50%, 0);
     color: rgba(241, 241, 241, 0.5);
     background-color: #21262d;
+    margin: 0;
+    border-radius: 10px;
+    box-shadow: 4px 2px 8px rgba(0,0,0,0.5);
 }
 
 .buttons {
@@ -46,13 +51,13 @@
     cursor: pointer;
 }
 
-.modal>h1 {
+.modal h1 {
     font-size: 2.8vw;
     margin: 0;
     width: 100%;
 }
 
-.modal>p {
+.modal p {
     font-size: 1.5vw;
     width: 100%;
 }

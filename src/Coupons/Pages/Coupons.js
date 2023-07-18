@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { AnimatePresence } from "framer-motion";
+
 import ErrorModal from "../../Shared/UI/Modal";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 import CouponList from "../Components/CouponList";
@@ -27,7 +29,9 @@ const Coupons = () => {
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
-            { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
+            <AnimatePresence>
+                { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
+            </AnimatePresence>
             { !isLoading && loadedData && (<CouponList items={ loadedData } />) }
         </React.Fragment>
     );
