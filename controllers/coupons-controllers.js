@@ -58,6 +58,14 @@ const createCoupon = async (req, res, next) => {
     }
 
     const { title, description, couponCode, company, expirationDate, creator } = req.body;
+    
+    const currentTime = new Date()
+    const expirationTime = new Date(expirationDate)
+
+    if(currentTime > expirationTime){
+        return next(new HttpError('Expiration date cannot be older than current date',422))
+    }
+
     const createdCoupon = new Coupon({
         title,
         description,
@@ -102,6 +110,14 @@ const updateCouponById = async (req, res, next) => {
         throw new HttpError('Invalid inputs passed', 422);
     }
     const { title, description, couponCode, company, expirationDate } = req.body;
+
+    const currentTime = new Date()
+    const expirationTime = new Date(expirationDate)
+
+    if(currentTime > expirationTime){
+        return next(new HttpError('Expiration date cannot be older than current date',422))
+    }
+
     const couponId = req.params.couponId;
 
     let coupon;
