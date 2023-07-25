@@ -24,7 +24,11 @@ const signup = async (req, res, next) => {
     if(!errors.isEmpty()) {
         return next(new HttpError('Invalid inputs passed', 500));
     }
-    const { email, password } = req.body;
+    const { email, password, confirmPassword } = req.body;
+
+    if(password !== confirmPassword){
+        return next(new HttpError('Passwords do not match', 422))
+    }
 
     let existingUser;
     try {

@@ -1,14 +1,15 @@
 .card {
     background-color: #21262d;
     margin: 15vh 15vw 0 15vw;
-    height: 70vh;
+    min-height: 60vh;
+    max-height: auto;
     padding: 10px;
     text-align: center;
 }
 
 .form_element button {
-    margin: 1.4rem;
-    padding: 0.5rem;
+    margin-top: 2.5rem;
+    padding: 1rem 0rem;
     width: 8vw;
     border-radius: 1rem;
 }

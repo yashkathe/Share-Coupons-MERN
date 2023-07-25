@@ -35,6 +35,7 @@ const SignupForm = (props) => {
         const formData = new FormData();
         formData.append('email', emailID);
         formData.append('password', password);
+        formData.append( 'confirmPassword', confirmPassword)
         formData.append('image', profileImage);
 
         props.onSigningUp(formData);
