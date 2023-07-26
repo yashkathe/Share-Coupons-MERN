@@ -8,11 +8,20 @@ import styles from './CouponList.module.css';
 
 const CouponList = (props) => {
 
-    if(props.items.length === 0) {
+    if(props.items.length === 0 && props.isCart === true) {
+        return (
+            <Card className={ styles.error_card }>
+                <h2>No Coupons in Cart</h2>
+                <Link to={ "/" }>View Coupons</Link>
+            </Card>
+        );
+    }
+
+    if(props.items.length === 0 && !props.isCart) {
         return (
             <Card className={ styles.error_card }>
                 <h2>No Coupons found. Maybe create one?</h2>
-                <Link to={"/coupon/new"}>Create Coupon</Link>
+                <Link to={ "/coupon/new" }>Create Coupon</Link>
             </Card>
         );
     }

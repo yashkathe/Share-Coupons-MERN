@@ -7,6 +7,7 @@ import Signup from "./Autentication/Pages/Signup";
 import AddCoupons from "./Coupons/Pages/AddCoupons";
 import UserCoupons from "./Coupons/Pages/UserCoupons";
 import UpdateCoupon from "./Coupons/Pages/UpdateCoupon";
+import Cart from "./Coupons/Pages/Cart";
 import Header from "./Shared/Components/Header";
 
 import { AuthContext } from "./Shared/Context/auth-context";
@@ -70,6 +71,9 @@ const App = () => {
                 </Route>
                 <Route path="/:userId/coupons" exact>
                     <UserCoupons />
+                </Route>
+                <Route path="/:userId/cart">
+                    <Cart/>
                 </Route>
                 <Route path="/coupon/new" exact>
                     <AddCoupons />

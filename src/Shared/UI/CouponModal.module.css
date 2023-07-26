@@ -70,6 +70,18 @@
     color: rgb(241, 241, 241)
 }
 
+.button:disabled {
+    cursor: not-allowed;
+    background-color: #cccccc;
+    color: #666666;
+    border: 2px solid #666666;
+}
+
+.button:hover:disabled,
+.button:active:disabled {
+    box-shadow: none;
+}
+
 .credits {
     font-size: 1.1rem !important;
     font-style: italic;
