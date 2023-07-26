@@ -18,6 +18,7 @@ const CouponItem = (props) => {
     const auth = useContext(AuthContext);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
     const [ showDeleteModal, setShowDeleteModal ] = useState(false);
     const [ showCouponModal, setShowCouponModal ] = useState(false);
     const [ loadedData, setLoadedData ] = useState();
@@ -54,7 +55,19 @@ const CouponItem = (props) => {
     };
 
     const addToCartHandler = async () => {
-        console.log('added to cart');
+        try {
+            await sendRequest(`http://localhost:5000/api/coupons/cart`,
+                'POST',
+                JSON.stringify({
+                    couponId: props.couponId,
+                    userId: auth.userId
+                }),
+                {
+                    'Content-Type': 'application/json',
+                    'authorization': 'Bearer ' + auth.token
+                });
+            setShowCouponModal(false);
+        } catch(err) { console.log(err); }
     };
 
     return (
@@ -67,7 +80,7 @@ const CouponItem = (props) => {
             </AnimatePresence>
 
             <AnimatePresence>
-                { loadedData && showCouponModal && !isLoading && (<CouponModal
+                { loadedData && showCouponModal && !isLoading && !error && (<CouponModal
                     onClick={ closeViewHandler }
                     title={ loadedData.coupon.title }
                     description={ loadedData.coupon.description }
@@ -75,6 +88,8 @@ const CouponItem = (props) => {
                     expirationDate={ loadedData.coupon.expirationDate }
                     creator={ loadedData.coupon.creator.email }
                     addToCart={ addToCartHandler }
+                    disabled={ loadedData.coupon.creator.id === auth.userId ? true : false }
+                    isCreatedBySameUser={ loadedData.coupon.creator.id === auth.userId ? true : false }
                 />) }
             </AnimatePresence>
 
@@ -87,7 +102,8 @@ const CouponItem = (props) => {
                         onCancel={ deleteHandlerfalse }
                         onConfirm={ confirmDeleteHandler }
                         onConfirmMsg="DELETE"
-                        onBackdropClick={ deleteHandlerfalse } />
+                        onBackdropClick={ deleteHandlerfalse }
+                    />
                 }
             </AnimatePresence>
 
