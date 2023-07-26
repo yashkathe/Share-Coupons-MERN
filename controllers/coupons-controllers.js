@@ -22,7 +22,7 @@ const getCouponById = async (req, res, next) => {
 
     let coupon;
     try {
-        coupon = await Coupon.findById(couponId).populate({path:"creator"});
+        coupon = await Coupon.findById(couponId).populate({ path: "creator" });
     } catch(err) {
         return next(new HttpError('Could not find a coupon with specified ID', 500));
     }
@@ -58,12 +58,12 @@ const createCoupon = async (req, res, next) => {
     }
 
     const { title, description, couponCode, company, expirationDate, creator } = req.body;
-    
-    const currentTime = new Date()
-    const expirationTime = new Date(expirationDate)
 
-    if(currentTime > expirationTime){
-        return next(new HttpError('Expiration date cannot be older than current date',422))
+    const currentTime = new Date();
+    const expirationTime = new Date(expirationDate);
+
+    if(currentTime > expirationTime) {
+        return next(new HttpError('Expiration date cannot be older than current date', 422));
     }
 
     const createdCoupon = new Coupon({
@@ -111,11 +111,11 @@ const updateCouponById = async (req, res, next) => {
     }
     const { title, description, couponCode, company, expirationDate } = req.body;
 
-    const currentTime = new Date()
-    const expirationTime = new Date(expirationDate)
+    const currentTime = new Date();
+    const expirationTime = new Date(expirationDate);
 
-    if(currentTime > expirationTime){
-        return next(new HttpError('Expiration date cannot be older than current date',422))
+    if(currentTime > expirationTime) {
+        return next(new HttpError('Expiration date cannot be older than current date', 422));
     }
 
     const couponId = req.params.couponId;
@@ -127,15 +127,15 @@ const updateCouponById = async (req, res, next) => {
         return next(new HttpError('Could not update a coupon with specified ID', 500));
     }
 
-    if (coupon.creator.toString() != req.userData.userId){
+    if(coupon.creator.toString() != req.userData.userId) {
         return next(new HttpError('Not allowed to edit this place', 403));
     }
 
     coupon.title = title;
     coupon.description = description;
-    coupon.couponCode = couponCode
-    coupon.company = company
-    coupon.expirationDate = expirationDate
+    coupon.couponCode = couponCode;
+    coupon.company = company;
+    coupon.expirationDate = expirationDate;
 
     try {
         await coupon.save();
@@ -161,11 +161,64 @@ const deleteCouponById = async (req, res, next) => {
         return next(new HttpError('Could not find a coupon with specified ID', 404));
     }
 
-    if(coupon.creator.id !== req.userData.userId){
+    if(coupon.creator.id !== req.userData.userId) {
         return next(new HttpError('Not allowed to delete this place', 403));
     }
 
     res.status(200).json({ coupon: coupon.toObject({ getters: true }), message: "Coupon deleted successfully" });
+};
+
+const addToCart = async (req, res, next) => {
+
+    const { couponId, userId } = req.body;
+
+    let coupon;
+    let user;
+
+    // find user and coupon with given id
+    try {
+        user = await User.findById(userId);
+        coupon = await Coupon.findById(couponId);
+    } catch(err) {
+        return next(new HttpError('Invalid or user or coupon ID', 500));
+    }
+
+    // if user and coupon dont exist
+    if(!user) {
+        return next(new HttpError('Could not find a user, please login again', 500));
+    }
+    if(!coupon) {
+        return next(new HttpError('Could not find a coupon, please refresh this page', 500));
+    }
+
+    // avoid duplicates
+    if(user.cart.includes(couponId)) {
+        return next(new HttpError('You already have the same coupon in your cart', 500));
+    }
+
+    // add to cart 
+    try {
+        user.cart.push(couponId);
+        await user.save();
+    } catch(err) {
+        console.log(err);
+        return next(new HttpError('Adding to cart Failed', 500));
+    }
+
+    res.status(201).json({ coupon });
+
+};
+
+const getCartById = async (req, res, next) => {
+
+    const userId = req.params.userId;
+
+    const user = await User.findById(userId).populate({ path: "cart" });
+
+    if(!user) return next(new HttpError('No such user found', 404));
+
+    res.status(200).json({ cart: user.cart.map(coupon => coupon.toObject({ getters: true })) });
+
 };
 
 exports.getCouponById = getCouponById;
@@ -174,3 +227,5 @@ exports.createCoupon = createCoupon;
 exports.updateCouponById = updateCouponById;
 exports.deleteCouponById = deleteCouponById;
 exports.getCoupons = getCoupons;
+exports.addToCart = addToCart;
+exports.getCartById = getCartById;

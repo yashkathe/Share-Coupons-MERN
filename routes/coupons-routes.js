@@ -2,7 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const couponsController = require('../controllers/coupons-controllers');
-const checkAuth = require('../middleware/check-auth')
+const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
@@ -13,7 +13,12 @@ router.get('/user/:userId', couponsController.getCouponsByUserId);
 
 router.get('/', couponsController.getCoupons);
 
-router.use(checkAuth)
+router.get(
+    '/:userId/cart',
+    couponsController.getCartById
+)
+
+router.use(checkAuth);
 
 router.post(
     '/', [
@@ -31,6 +36,10 @@ router.patch(
     check('description').isLength({ min: 5 })
 ],
     couponsController.updateCouponById);
+
+router.post(
+    '/cart',
+    couponsController.addToCart);
 
 router.delete('/:couponId', couponsController.deleteCouponById);
 
