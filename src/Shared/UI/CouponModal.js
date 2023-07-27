@@ -41,11 +41,13 @@ const CouponModal = (props) => {
                         <p> company: </p> <p>{ props.company }</p>
                         <p>expires-on: </p> <p>{ props.expirationDate }</p>
                     </div>
-                    <button disabled={ props.disabled } className={ styles.button } onClick={ props.addToCart }>ADD TO CART</button>
                     {
-                        props.isCreatedBySameUser ?
-                            <p className={ styles.credits }> - This coupon is provided by you</p> :
-                            <p className={ styles.credits }> - Coupon provided by { props.creator }</p>
+                        !props.disableAddToCartBtn && !props.isCreatedBySameUser &&
+                        <button disabled={ props.disabled } className={ styles.button } onClick={ props.addToCart }>ADD TO CART</button>
+                    }
+                    {
+                        !props.isCreatedBySameUser &&
+                        <p className={ styles.credits }> - Coupon provided by { props.creator }</p>
                     }
                 </motion.div>
                 < Backdrop onClick={ props.onClick } />

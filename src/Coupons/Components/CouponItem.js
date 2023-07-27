@@ -28,15 +28,7 @@ const CouponItem = (props) => {
 
     const confirmDeleteHandler = async () => {
         setShowDeleteModal(false);
-        try {
-            await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`,
-                'DELETE',
-                null,
-                {
-                    'authorization': 'Bearer ' + auth.token
-                });
-            props.onDeleteCoupon(props.couponId);
-        } catch(err) { console.log(err); }
+        props.onDeleteCoupon(props.couponId);
     };
 
     const onViewHandler = async () => {
@@ -56,6 +48,7 @@ const CouponItem = (props) => {
 
     const addToCartHandler = async () => {
         try {
+            setShowCouponModal(false);
             await sendRequest(`http://localhost:5000/api/coupons/cart`,
                 'POST',
                 JSON.stringify({
@@ -66,7 +59,6 @@ const CouponItem = (props) => {
                     'Content-Type': 'application/json',
                     'authorization': 'Bearer ' + auth.token
                 });
-            setShowCouponModal(false);
         } catch(err) { console.log(err); }
     };
 
@@ -80,24 +72,26 @@ const CouponItem = (props) => {
             </AnimatePresence>
 
             <AnimatePresence>
-                { loadedData && showCouponModal && !isLoading && !error && (<CouponModal
-                    onClick={ closeViewHandler }
-                    title={ loadedData.coupon.title }
-                    description={ loadedData.coupon.description }
-                    company={ loadedData.coupon.company }
-                    expirationDate={ loadedData.coupon.expirationDate }
-                    creator={ loadedData.coupon.creator.email }
-                    addToCart={ addToCartHandler }
-                    disabled={ loadedData.coupon.creator.id === auth.userId ? true : false }
-                    isCreatedBySameUser={ loadedData.coupon.creator.id === auth.userId ? true : false }
-                />) }
+                { loadedData && showCouponModal && !isLoading && !error && (
+                    <CouponModal
+                        onClick={ closeViewHandler }
+                        title={ loadedData.coupon.title }
+                        description={ loadedData.coupon.description }
+                        company={ loadedData.coupon.company }
+                        expirationDate={ loadedData.coupon.expirationDate }
+                        creator={ loadedData.coupon.creator.email }
+                        addToCart={ addToCartHandler }
+                        disableAddToCartBtn={props.disableAddToCartBtn}
+                        disabled={ loadedData.coupon.creator.id === auth.userId ? true : false }
+                        isCreatedBySameUser={ loadedData.coupon.creator.id === auth.userId ? true : false }
+                    />) }
             </AnimatePresence>
 
             <AnimatePresence>
                 { showDeleteModal &&
                     <Modal
                         headerMessage="Are you sure ?"
-                        paraMessage="Do you want to proceed and delete this coupon ?"
+                        paraMessage={ props.deleteMessage }
                         showButtons={ true }
                         onCancel={ deleteHandlerfalse }
                         onConfirm={ confirmDeleteHandler }
@@ -121,8 +115,8 @@ const CouponItem = (props) => {
                 </div>
                 <div className={ styles.buttons }>
                     <button onClick={ onViewHandler } value={ props.couponId } >VIEW</button>
-                    { props.showAdminButtons && (<Link to={ `/coupon/${props.couponId}` }>EDIT</Link>) }
-                    { props.showAdminButtons && (<button onClick={ deleteHandler }>DELETE</button>) }
+                    { props.showEditButton && (<Link to={ `/coupon/${props.couponId}` }>EDIT</Link>) }
+                    { props.showDeleteButton && (<button onClick={ deleteHandler }>DELETE</button>) }
                 </div>
             </Card>
 

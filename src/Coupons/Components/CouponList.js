@@ -11,7 +11,7 @@ const CouponList = (props) => {
     if(props.items.length === 0 && props.isCart === true) {
         return (
             <Card className={ styles.error_card }>
-                <h2>No Coupons in Cart</h2>
+                <h2>No Coupons in your Cart</h2>
                 <Link to={ "/" }>View Coupons</Link>
             </Card>
         );
@@ -37,7 +37,10 @@ const CouponList = (props) => {
                         company={ item.company }
                         expirationDate={ item.expirationDate }
                         onDeleteCoupon={ props.onDeleteCoupon }
-                        showAdminButtons={ props.showAdminButtons }
+                        deleteMessage={ props.deleteMessage }
+                        showEditButton={ props.showEditButton }
+                        showDeleteButton={ props.showDeleteButton }
+                        disableAddToCartBtn={props.disableAddToCartBtn}
                     />
                 )) }
         </li>

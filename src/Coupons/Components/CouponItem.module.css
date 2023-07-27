@@ -2,7 +2,7 @@
     background-color: #21262d;
     box-sizing: border-box;
     min-width: 20vw;
-    max-width: auto;
+    max-width: 25vw;
     margin: 1rem;
     min-height: 20vh;
     max-height: auto;
@@ -30,7 +30,7 @@
 
 .card:hover .couponItem__info p,
 .card:hover .couponItem__info h4 {
-    color: #8d8b8b;
+    color: rgba(241, 241, 241, 0.8);
     transition: 500ms;
 }
 
