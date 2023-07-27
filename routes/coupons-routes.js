@@ -16,7 +16,7 @@ router.get('/', couponsController.getCoupons);
 router.get(
     '/:userId/cart',
     couponsController.getCartById
-)
+);
 
 router.use(checkAuth);
 
@@ -42,5 +42,7 @@ router.post(
     couponsController.addToCart);
 
 router.delete('/:couponId', couponsController.deleteCouponById);
+
+router.delete('/cart/:couponId', couponsController.deleteCouponFromCartById);
 
 module.exports = router;
