@@ -42,8 +42,8 @@ const NavLinks = () => {
             {
                 auth.isLoggedIn && (
                     <motion.div whileHover={ { scale: 1.2 } }>
-                        <li>
-                            <NavLink to={ `/${auth.userId}/cart` } exact>
+                        <li >
+                            <NavLink to={ `/${auth.userId}/cart` } activeClassName={ styles.active } exact>
                                 <img src={ hoverCart ? cartLogoHover : cartLogo }
                                     alt="cart"
                                     onMouseEnter={ cartHoverHandler }

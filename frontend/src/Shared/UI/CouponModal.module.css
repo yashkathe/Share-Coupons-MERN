@@ -52,6 +52,7 @@
 
 .button {
     margin-bottom: 3rem;
+    margin-top: 2rem;
     padding: 0.8rem 0.5rem;
     width: 20%;
     font-size: 1.3rem;
@@ -85,6 +86,6 @@
 .credits {
     font-size: 1.1rem !important;
     font-style: italic;
-    margin-top: 0;
-    color: #5f5f5f;
+    margin-top: 1rem;
+    color: #8f8d8d !important;
 }

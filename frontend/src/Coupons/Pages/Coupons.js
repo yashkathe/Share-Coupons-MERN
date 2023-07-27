@@ -32,7 +32,9 @@ const Coupons = () => {
             <AnimatePresence>
                 { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
             </AnimatePresence>
-            { !isLoading && loadedData && (<CouponList items={ loadedData } />) }
+            { !isLoading && loadedData && (
+                <CouponList
+                    items={ loadedData } />) }
         </React.Fragment>
     );
 };

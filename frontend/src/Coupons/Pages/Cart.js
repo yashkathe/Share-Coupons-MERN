@@ -18,6 +18,25 @@ const Cart = () => {
 
     const [ loadedData, setLoadedData ] = useState([]);
 
+    const removeFromCartHandler = async (couponId) => {
+        try {
+            await sendRequest(
+                `http://localhost:5000/api/coupons/cart/${couponId}`,
+                'DELETE',
+                JSON.stringify({
+                    userId: auth.userId
+                }),
+                {
+                    'Content-Type': 'application/json',
+                    'authorization': 'Bearer ' + auth.token
+                }
+            );
+
+            setLoadedData(prevCart => prevCart.filter(coupon => coupon.id !== couponId));
+
+        } catch(err) { console.log(err); }
+    };
+
     useEffect(() => {
 
         const fetchCartCoupons = async () => {
@@ -25,6 +44,7 @@ const Cart = () => {
                 const responseData = await sendRequest(
                     `http://localhost:5000/api/coupons/${auth.userId}/cart`,
                 );
+                console.log(responseData.cart);
                 setLoadedData(responseData.cart);
             } catch(err) { console.log(err); }
         };
@@ -39,7 +59,15 @@ const Cart = () => {
             <AnimatePresence>
                 { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
             </AnimatePresence>
-            { !isLoading && loadedData && (<CouponList items={ loadedData } isCart={ true } />) }
+            { !isLoading && loadedData && (
+                <CouponList
+                    items={ loadedData }
+                    isCart={ true }
+                    onDeleteCoupon={ removeFromCartHandler }
+                    deleteMessage="Delete coupon from cart ?"
+                    showDeleteButton={ true }
+                    disableAddToCartBtn={ true }
+                />) }
         </React.Fragment>
     );
 };

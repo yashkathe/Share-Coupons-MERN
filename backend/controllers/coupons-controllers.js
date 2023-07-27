@@ -221,6 +221,34 @@ const getCartById = async (req, res, next) => {
 
 };
 
+const deleteCouponFromCartById = async (req, res, next) => {
+
+    const couponId = req.params.couponId;
+    const { userId } = req.body;
+
+    let coupon;
+    let user;
+
+    // find this user to get its cart
+
+    try {
+        user = await User.findById(userId).populate({ path: "cart" });
+    } catch {}
+
+    if(!user) return next(new HttpError('No such user found', 404));
+
+    // delete coupon from cart
+
+    try {
+        user.cart = user.cart.filter(
+            coupon => coupon._id.toString() !== couponId);
+        await user.save();
+    } catch{ }
+
+    res.status(200).json({ coupon: user.cart.map(coupon => coupon.toObject({ getters: true })), message: "Coupon removed from cart" });
+
+};
+
 exports.getCouponById = getCouponById;
 exports.getCouponsByUserId = getCouponsByUserId;
 exports.createCoupon = createCoupon;
@@ -229,3 +257,4 @@ exports.deleteCouponById = deleteCouponById;
 exports.getCoupons = getCoupons;
 exports.addToCart = addToCart;
 exports.getCartById = getCartById;
+exports.deleteCouponFromCartById = deleteCouponFromCartById;
