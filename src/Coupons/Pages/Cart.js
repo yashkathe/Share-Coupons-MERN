@@ -58,16 +58,16 @@ const Cart = () => {
             { isLoading && <LoadingSpinner asOverlay /> }
             <AnimatePresence>
                 { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+                { !isLoading && loadedData && (
+                    <CouponList
+                        items={ loadedData }
+                        isCart={ true }
+                        onDeleteCoupon={ removeFromCartHandler }
+                        deleteMessage="Delete coupon from cart ?"
+                        showDeleteButton={ true }
+                        disableAddToCartBtn={ true }
+                    />) }
             </AnimatePresence>
-            { !isLoading && loadedData && (
-                <CouponList
-                    items={ loadedData }
-                    isCart={ true }
-                    onDeleteCoupon={ removeFromCartHandler }
-                    deleteMessage="Delete coupon from cart ?"
-                    showDeleteButton={ true }
-                    disableAddToCartBtn={ true }
-                />) }
         </React.Fragment>
     );
 };
