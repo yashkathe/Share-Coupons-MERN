@@ -59,7 +59,24 @@ const CouponItem = (props) => {
                     'Content-Type': 'application/json',
                     'authorization': 'Bearer ' + auth.token
                 });
-        } catch(err) { console.log(err); }
+        } catch(err) {}
+    };
+
+    const couponVariant = {
+        initial: {
+            x:"-5vw",
+            opacity:0
+        },
+        animate: {
+            x:"0",
+            opacity: 1,
+            transition:{duration: 0}
+        },
+        exit: {
+            opacity: 0,
+            x:"10vw",
+            transition:{duration: 2}
+        }
     };
 
     return (
@@ -69,25 +86,21 @@ const CouponItem = (props) => {
                 { error &&
                     <Modal paraMessage={ error } onBackdropClick={ clearError } />
                 }
-            </AnimatePresence>
 
-            <AnimatePresence>
                 { loadedData && showCouponModal && !isLoading && !error && (
                     <CouponModal
-                        onClick={ closeViewHandler }
+                        onBackdropClick={ closeViewHandler }
                         title={ loadedData.coupon.title }
                         description={ loadedData.coupon.description }
                         company={ loadedData.coupon.company }
                         expirationDate={ loadedData.coupon.expirationDate }
                         creator={ loadedData.coupon.creator.email }
                         addToCart={ addToCartHandler }
-                        disableAddToCartBtn={props.disableAddToCartBtn}
+                        disableAddToCartBtn={ props.disableAddToCartBtn }
                         disabled={ loadedData.coupon.creator.id === auth.userId ? true : false }
                         isCreatedBySameUser={ loadedData.coupon.creator.id === auth.userId ? true : false }
                     />) }
-            </AnimatePresence>
 
-            <AnimatePresence>
                 { showDeleteModal &&
                     <Modal
                         headerMessage="Are you sure ?"
@@ -101,7 +114,13 @@ const CouponItem = (props) => {
                 }
             </AnimatePresence>
 
-            <Card className={ styles.card }>
+            <Card
+                className={ styles.card }
+                variants={ couponVariant }
+                initial="initial"
+                animate="animate"
+                exit="exit"
+            >
                 <div className={ styles.couponItem__code }>
                     <h1> { props.title } !</h1>
                 </div>

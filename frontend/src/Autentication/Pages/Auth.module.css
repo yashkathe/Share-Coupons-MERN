@@ -20,7 +20,7 @@
     text-align: center;
 }
 
-.footer{
+.footer {
     color: rgba(241, 241, 241, 0.8);
     font-style: italic;
     font-size: 1.4rem;
@@ -30,5 +30,5 @@
 }
 
 .footer a {
-    color:#7371ff;
+    color: #7371ff;
 }

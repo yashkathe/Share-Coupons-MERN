@@ -47,16 +47,16 @@ const UserCoupons = () => {
             { isLoading && <LoadingSpinner asOverlay /> }
             <AnimatePresence>
                 { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
+                { !isLoading && loadedData && (
+                    <CouponList
+                        items={ loadedData }
+                        onDeleteCoupon={ onDeleteCoupon }
+                        deleteMessage="Do you want to proceed and delete this coupon ??"
+                        showEditButton={ true }
+                        showDeleteButton={ true }
+                        disableAddToCartBtn={ true }
+                    />) }
             </AnimatePresence>
-            { !isLoading && loadedData && (
-                <CouponList
-                    items={ loadedData }
-                    onDeleteCoupon={ onDeleteCoupon }
-                    deleteMessage="Do you want to proceed and delete this coupon ??"
-                    showEditButton={ true }
-                    showDeleteButton={ true }
-                    disableAddToCartBtn={ true }
-                />) }
         </React.Fragment>
     );
 };

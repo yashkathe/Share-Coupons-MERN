@@ -1,5 +1,4 @@
-.modal{
-
+.modal {
     z-index: 100;
     width: 100%;
     position: fixed;
@@ -17,7 +16,7 @@
     background-color: #21262d;
     margin: 0;
     border-radius: 10px;
-    box-shadow: 4px 2px 8px rgba(0,0,0,0.5);
+    box-shadow: 4px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .buttons {

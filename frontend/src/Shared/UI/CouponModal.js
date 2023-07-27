@@ -10,16 +10,25 @@ import styles from './CouponModal.module.css';
 const CouponModal = (props) => {
 
     const modalVariant = {
-        hidden: {
+        initial: {
             y: "100vh",
+            transition: {
+                ease: "linear",
+            }
         },
-        visible: {
+        animate: {
             y: 0,
-            transition: { type: "tween", duration: "0.5" }
+            transition: {
+                ease: "linear",
+                y: { duration: 0.8 }
+            }
         },
         exit: {
             y: "100vh",
-            transition: { type: "tween", duration: "0.5" }
+            transition: {
+                ease: "linear",
+                y: { duration: 0.8 }
+            }
         }
     };
 
@@ -29,9 +38,9 @@ const CouponModal = (props) => {
                 <motion.div
                     className={ styles.modal }
                     variants={ modalVariant }
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
                 >
                     <h1>{ props.title }</h1>
                     <p>
@@ -50,7 +59,7 @@ const CouponModal = (props) => {
                         <p className={ styles.credits }> - Coupon provided by { props.creator }</p>
                     }
                 </motion.div>
-                < Backdrop onClick={ props.onClick } />
+                < Backdrop onClick={ props.onBackdropClick } />
             </React.Fragment >
 
             , document.getElementById('coupon-modal'))
