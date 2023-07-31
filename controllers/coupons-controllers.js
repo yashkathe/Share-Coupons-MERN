@@ -152,17 +152,56 @@ const deleteCouponById = async (req, res, next) => {
 
     let coupon;
     try {
-        coupon = await Coupon.findByIdAndDelete(couponId).populate('creator');
+        coupon = await Coupon.findById(couponId).populate('creator');
     } catch {
         return next(new HttpError('Could not update a coupon with specified ID', 500));
     }
 
-    if(!coupon) {
-        return next(new HttpError('Could not find a coupon with specified ID', 404));
+    // if(!coupon) {
+    //     return next(new HttpError('Could not find a coupon with specified ID', 404));
+    // }
+
+    let user;
+    try {
+        user = await User.findById(req.userData.userId);
+    } catch {
+        return next(new HttpError('Could not update a user with specified ID', 500));
+    }
+
+    if(!user) {
+        return next(new HttpError('Could not find a user with specified ID', 404));
     }
 
     if(coupon.creator.id !== req.userData.userId) {
         return next(new HttpError('Not allowed to delete this place', 403));
+    }
+
+    try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+
+        //delete Coupon
+        await Coupon.findByIdAndDelete(couponId).session(sess);
+
+        //delete ref value from user document who created it
+        user.coupons = user.coupons.filter(
+            coupon => coupon.toString() !== couponId);
+        await user.save({ session: sess });
+
+        // delete couponId ref from other user documents who have it in their cart
+        let userCarts = await User.find({ cart: mongoose.Types.ObjectId(couponId) });
+
+        for(const user of userCarts) {
+            user.cart = user.cart.filter((coupon) => coupon.toString() !== couponId);
+            try {
+                await user.save({ session: sess });
+            } catch(err) { sess.abortTransaction(); }
+        }
+
+        await sess.commitTransaction();
+    } catch(err) {
+        console.log(err);
+        return next(new HttpError('Deleting Coupon Failed', 500));
     }
 
     res.status(200).json({ coupon: coupon.toObject({ getters: true }), message: "Coupon deleted successfully" });
@@ -243,9 +282,21 @@ const deleteCouponFromCartById = async (req, res, next) => {
         user.cart = user.cart.filter(
             coupon => coupon._id.toString() !== couponId);
         await user.save();
-    } catch{ }
+    } catch {}
 
     res.status(200).json({ coupon: user.cart.map(coupon => coupon.toObject({ getters: true })), message: "Coupon removed from cart" });
+
+};
+
+const checkoutCart = async (req, res, next) => {
+    const userId = req.params.userId;
+
+    let user;
+    try {
+        user = await User.findById(userId).populate({ path: "coupons" });
+    } catch(err) { console.log(err); }
+
+    console.log(user);
 
 };
 
@@ -258,3 +309,4 @@ exports.getCoupons = getCoupons;
 exports.addToCart = addToCart;
 exports.getCartById = getCartById;
 exports.deleteCouponFromCartById = deleteCouponFromCartById;
+exports.checkoutCart = checkoutCart;
