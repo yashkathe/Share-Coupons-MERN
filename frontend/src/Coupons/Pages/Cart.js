@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 import Modal from "../../Shared/UI/Modal";
@@ -9,6 +9,8 @@ import CouponList from "../Components/CouponList";
 import { AuthContext } from "../../Shared/Context/auth-context";
 
 import { useHttpClient } from "../../Hooks/useHttpHook";
+
+import styles from './Cart.module.css';
 
 const Cart = () => {
 
@@ -44,7 +46,6 @@ const Cart = () => {
                 const responseData = await sendRequest(
                     `http://localhost:5000/api/coupons/${auth.userId}/cart`,
                 );
-                console.log(responseData.cart);
                 setLoadedData(responseData.cart);
             } catch(err) { console.log(err); }
         };
@@ -53,22 +54,53 @@ const Cart = () => {
 
     }, [ sendRequest, auth.userId ]);
 
+
+    const checkoutCartHandler = async () => {
+        try {
+            await sendRequest(
+                `http://localhost:5000/api/coupons/cart/checkout/${auth.userId}`,
+                "POST",
+                null,
+                {
+                    'authorization': 'Bearer ' + auth.token
+                }
+            );
+            setLoadedData([]);
+        } catch(err) {}
+    };
+
+
     return (
         <React.Fragment>
+
             { isLoading && <LoadingSpinner asOverlay /> }
+
             <AnimatePresence>
                 { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
-                { !isLoading && loadedData && (
-                    <CouponList
-                        items={ loadedData }
-                        isCart={ true }
-                        onDeleteCoupon={ removeFromCartHandler }
-                        deleteMessage="Delete coupon from cart ?"
-                        showDeleteButton={ true }
-                        disableAddToCartBtn={ true }
-                    />) }
             </AnimatePresence>
-        </React.Fragment>
+
+            { !isLoading && loadedData && (
+                <CouponList
+                    items={ loadedData }
+                    isCart={ true }
+                    onDeleteCoupon={ removeFromCartHandler }
+                    deleteMessage="Delete coupon from cart ?"
+                    showDeleteButton={ true }
+                    disableAddToCartBtn={ true }
+                />) }
+
+            {
+                loadedData.length !== 0 &&
+                <div className={ styles.checkoutBtn }>
+                    <motion.button
+                        onClick={ checkoutCartHandler }
+                        type="button"
+                        whileHover={{scale:1.1, transition:{ease:"easeInOut" , duration:0.1}}}>
+                        CHECK OUT
+                    </motion.button>
+                </div>
+            }
+        </React.Fragment >
     );
 };
 

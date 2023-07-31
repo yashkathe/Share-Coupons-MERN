@@ -45,4 +45,6 @@ router.delete('/:couponId', couponsController.deleteCouponById);
 
 router.delete('/cart/:couponId', couponsController.deleteCouponFromCartById);
 
+router.post('/cart/checkout/:userId', couponsController.checkoutCart)
+
 module.exports = router;
