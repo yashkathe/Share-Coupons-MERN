@@ -64,18 +64,18 @@ const CouponItem = (props) => {
 
     const couponVariant = {
         initial: {
-            x:"-5vw",
-            opacity:0
+            x: "-5vw",
+            opacity: 0
         },
         animate: {
-            x:"0",
+            x: "0",
             opacity: 1,
-            transition:{duration: 0}
+            transition: { duration: 0 }
         },
         exit: {
             opacity: 0,
-            x:"10vw",
-            transition:{duration: 2}
+            x: "10vw",
+            transition: { duration: 2 }
         }
     };
 
@@ -99,6 +99,7 @@ const CouponItem = (props) => {
                         disableAddToCartBtn={ props.disableAddToCartBtn }
                         disabled={ loadedData.coupon.creator.id === auth.userId ? true : false }
                         isCreatedBySameUser={ loadedData.coupon.creator.id === auth.userId ? true : false }
+                        isBoughtBySomeone={ loadedData.coupon.boughtBy === null ? false : true }
                     />) }
 
                 { showDeleteModal &&
@@ -135,7 +136,13 @@ const CouponItem = (props) => {
                 <div className={ styles.buttons }>
                     <button onClick={ onViewHandler } value={ props.couponId } >VIEW</button>
                     { props.showEditButton && (<Link to={ `/coupon/${props.couponId}` }>EDIT</Link>) }
-                    { props.showDeleteButton && (<button onClick={ deleteHandler }>DELETE</button>) }
+                    { props.showDeleteButton && (
+                        <button
+                            className={ styles.deleteBtn }
+                            onClick={ deleteHandler }
+                            disabled={ !props.disableDelete ? true : false }>
+                            DELETE
+                        </button>) }
                 </div>
             </Card>
 

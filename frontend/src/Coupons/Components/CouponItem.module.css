@@ -151,3 +151,7 @@ a:active {
     text-decoration: none;
     color: inherit;
 }
+
+.deleteBtn:disabled:hover{
+    cursor:not-allowed;
+}

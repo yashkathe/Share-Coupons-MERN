@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from "react-dom";
 
 import { motion } from "framer-motion";
 
 import Backdrop from "./Backdrop";
 
+import { AuthContext } from "../Context/auth-context";
+
 import styles from './CouponModal.module.css';
 
 const CouponModal = (props) => {
+
+    const auth = useContext(AuthContext);
 
     const modalVariant = {
         initial: {
@@ -51,12 +55,20 @@ const CouponModal = (props) => {
                         <p>expires-on: </p> <p>{ props.expirationDate }</p>
                     </div>
                     {
-                        !props.disableAddToCartBtn && !props.isCreatedBySameUser &&
+                        !props.disableAddToCartBtn && !props.isCreatedBySameUser && auth.isLoggedIn &&
                         <button disabled={ props.disabled } className={ styles.button } onClick={ props.addToCart }>ADD TO CART</button>
                     }
                     {
-                        !props.isCreatedBySameUser &&
+                        !props.isCreatedBySameUser && !props.isBoughtBySomeone &&
                         <p className={ styles.credits }> - Coupon provided by { props.creator }</p>
+                    }
+                    {
+                        props.isCreatedBySameUser && props.isBoughtBySomeone &&
+                        <p className={ styles.credits }> You can't delete this coupon now is it is bought by { props.creator }</p>
+                    }
+                    {
+                        !props.isCreatedBySameUser && props.isBoughtBySomeone &&
+                        <p className={ styles.credits }> Someone already bought this coupon</p>
                     }
                 </motion.div>
                 < Backdrop onClick={ props.onBackdropClick } />
