@@ -157,9 +157,9 @@ const deleteCouponById = async (req, res, next) => {
         return next(new HttpError('Could not update a coupon with specified ID', 500));
     }
 
-    // if(!coupon) {
-    //     return next(new HttpError('Could not find a coupon with specified ID', 404));
-    // }
+    if(!coupon) {
+        return next(new HttpError('Could not find a coupon with specified ID', 404));
+    }
 
     let user;
     try {
@@ -195,7 +195,10 @@ const deleteCouponById = async (req, res, next) => {
             user.cart = user.cart.filter((coupon) => coupon.toString() !== couponId);
             try {
                 await user.save({ session: sess });
-            } catch(err) { sess.abortTransaction(); }
+            } catch(err) {
+                sess.abortTransaction();
+                return next(new HttpError('Failed to buy these coupons', 500));
+            }
         }
 
         await sess.commitTransaction();
@@ -293,11 +296,41 @@ const checkoutCart = async (req, res, next) => {
 
     let user;
     try {
-        user = await User.findById(userId).populate({ path: "coupons" });
-    } catch(err) { console.log(err); }
+        user = await User.findById(userId).populate({ path: "cart" });
+    } catch(err) { return next(new HttpError('No user with specified email id found', 404)); }
 
-    console.log(user);
+    try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
 
+        // transfer cart to couponsBought
+        user.couponsBought = [ ...user.cart ];
+
+        // empty out the cart
+        user.cart = [];
+
+        // add user ref to coupons's boughtBy
+        for(const coupon of user.couponsBought) {
+            if(coupon.boughtBy === null) {
+                coupon.boughtBy = mongoose.Types.ObjectId(userId);
+            } else {
+                sess.abortTransaction();
+                return next(new HttpError(`the coupon "${coupon.title}" is already bought by someone`, 500));
+            }
+            try {
+                await coupon.save({ session: sess });
+            } catch(err) {
+                sess.abortTransaction();
+                return next(new HttpError('Failed to buy these coupons', 500));
+            }
+        }
+
+        user.save({ session: sess });
+
+        await sess.commitTransaction();
+    } catch(err) { session.abortTransaction(); }
+
+    res.status(200).json({ user: user.cart.toObject({ getters: true }), message: "You can use these coupons now" });
 };
 
 exports.getCouponById = getCouponById;
