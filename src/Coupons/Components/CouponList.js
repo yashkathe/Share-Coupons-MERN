@@ -27,6 +27,7 @@ const CouponList = (props) => {
     }
 
     return (
+
         <li className={ styles.coupon__list }>
             {
                 props.items.map(item => (
@@ -40,7 +41,8 @@ const CouponList = (props) => {
                         deleteMessage={ props.deleteMessage }
                         showEditButton={ props.showEditButton }
                         showDeleteButton={ props.showDeleteButton }
-                        disableAddToCartBtn={props.disableAddToCartBtn}
+                        disableAddToCartBtn={ props.disableAddToCartBtn }
+                        disableDelete={ item.boughtBy }
                     />
                 )) }
         </li>
