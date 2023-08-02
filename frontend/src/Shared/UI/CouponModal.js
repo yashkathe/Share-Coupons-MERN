@@ -55,11 +55,11 @@ const CouponModal = (props) => {
                         <p>expires-on: </p> <p>{ props.expirationDate }</p>
                     </div>
                     {
-                        !props.disableAddToCartBtn && !props.isCreatedBySameUser && auth.isLoggedIn &&
+                        !props.disableAddToCartBtn && !props.isCreatedBySameUser && auth.isLoggedIn && !props.isBoughtByUser &&
                         <button disabled={ props.disabled } className={ styles.button } onClick={ props.addToCart }>ADD TO CART</button>
                     }
                     {
-                        !props.isCreatedBySameUser && !props.isBoughtBySomeone &&
+                        !props.isCreatedBySameUser && !props.isBoughtBySomeone && !props.isBoughtByUser &&
                         <p className={ styles.credits }> - Coupon provided by { props.creator }</p>
                     }
                     {
@@ -67,8 +67,13 @@ const CouponModal = (props) => {
                         <p className={ styles.credits }> You can't delete this coupon now is it is bought by { props.creator }</p>
                     }
                     {
-                        !props.isCreatedBySameUser && props.isBoughtBySomeone &&
+                        !props.isCreatedBySameUser && props.isBoughtBySomeone && !props.isBoughtByUser &&
                         <p className={ styles.credits }> Someone already bought this coupon</p>
+                    }
+                    { props.isBoughtByUser && auth.isLoggedIn &&
+                        <div className={ styles.info }>
+                            <p> coupon code: </p> <p>{ props.code }</p>
+                        </div>
                     }
                 </motion.div>
                 < Backdrop onClick={ props.onBackdropClick } />

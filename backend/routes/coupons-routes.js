@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get('/:couponId', couponsController.getCouponById);
 
+router.get('/couponsBought/:userId', couponsController.getCouponsBoughtByUser);
+
 router.get('/user/:userId', couponsController.getCouponsByUserId);
 
 router.get('/', couponsController.getCoupons);
@@ -45,6 +47,6 @@ router.delete('/:couponId', couponsController.deleteCouponById);
 
 router.delete('/cart/:couponId', couponsController.deleteCouponFromCartById);
 
-router.post('/cart/checkout/:userId', couponsController.checkoutCart)
+router.post('/cart/checkout/:userId', couponsController.checkoutCart);
 
 module.exports = router;

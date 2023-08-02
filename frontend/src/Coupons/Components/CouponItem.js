@@ -35,7 +35,7 @@ const CouponItem = (props) => {
         try {
 
             const responseData = await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`);
-            setLoadedData(responseData);
+            setLoadedData(responseData.coupon);
             setShowCouponModal(true);
 
         } catch(err) { console.log(err); }
@@ -90,16 +90,18 @@ const CouponItem = (props) => {
                 { loadedData && showCouponModal && !isLoading && !error && (
                     <CouponModal
                         onBackdropClick={ closeViewHandler }
-                        title={ loadedData.coupon.title }
-                        description={ loadedData.coupon.description }
-                        company={ loadedData.coupon.company }
-                        expirationDate={ loadedData.coupon.expirationDate }
-                        creator={ loadedData.coupon.creator.email }
+                        title={ loadedData.title }
+                        description={ loadedData.description }
+                        company={ loadedData.company }
+                        expirationDate={ loadedData.expirationDate }
+                        creator={ loadedData.creator.email }
+                        code={ loadedData.couponCode }
                         addToCart={ addToCartHandler }
                         disableAddToCartBtn={ props.disableAddToCartBtn }
-                        disabled={ loadedData.coupon.creator.id === auth.userId ? true : false }
-                        isCreatedBySameUser={ loadedData.coupon.creator.id === auth.userId ? true : false }
-                        isBoughtBySomeone={ loadedData.coupon.boughtBy === null ? false : true }
+                        disabled={ loadedData.creator.id === auth.userId ? true : false }
+                        isCreatedBySameUser={ loadedData.creator.id === auth.userId ? true : false }
+                        isBoughtBySomeone={ loadedData.boughtBy === null ? false : true }
+                        isBoughtByUser={ loadedData.boughtBy === auth.userId ? true : false }
                     />) }
 
                 { showDeleteModal &&
@@ -123,7 +125,7 @@ const CouponItem = (props) => {
                 exit="exit"
             >
                 <div className={ styles.couponItem__code }>
-                    <h1> { props.title } !</h1>
+                    <h1> { props.title }</h1>
                 </div>
                 <div className={ styles.couponItem__info }>
                     <div>

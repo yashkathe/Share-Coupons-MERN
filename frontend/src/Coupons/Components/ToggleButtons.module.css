@@ -1,0 +1,54 @@
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 15vh 0 5vh 0;
+}
+
+.buttons button:nth-child(odd){
+    padding: 0.8rem 1rem;
+    border-radius: 20px 0 0 20px ;
+    background-color: transparent;
+    color: rgba(115, 113, 255,0.9);
+    border: 1px solid rgba(115, 113, 255,0.9);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.buttons button:nth-child(even){
+    padding: 0.8rem 1rem;
+    border-radius: 0 20px 20px 0 ;
+    background-color: transparent;
+    color: rgba(115, 113, 255,0.9);
+    border: 1px solid rgba(115, 113, 255,0.9);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.buttons button:nth-child(odd):disabled{
+    padding: 0.8rem 1rem;
+    border-radius: 20px 0 0 20px ;
+    background-color: transparent;
+    font-weight: 500;
+    font-size: 1rem;
+    background: #7371ff;
+    color: #ffffff;
+    border: 1px solid #919191
+}
+
+.buttons button:nth-child(even):disabled{
+    padding: 0.8rem 1rem;
+    border-radius: 0 20px 20px 0 ;
+    background-color: transparent;
+    font-weight: 500;
+    font-size: 1rem;
+    background: #7371ff;
+    color: #ffffff;
+    border: 1px solid #919191
+}
+
+
+.buttons button:hover{
+    cursor:pointer
+}
