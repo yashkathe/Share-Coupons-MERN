@@ -9,8 +9,9 @@ const getCoupons = async (req, res, next) => {
 
     let coupons;
     try {
-        coupons = await Coupon.find({});
+        coupons = await Coupon.find({ boughtBy: { $exists: true, $eq: null } });
     } catch(err) {
+        console.log(err);
         return next(new HttpError('Failed to retrive coupons', 500));
     }
 
@@ -281,7 +282,6 @@ const deleteCouponFromCartById = async (req, res, next) => {
     const couponId = req.params.couponId;
     const { userId } = req.body;
 
-    let coupon;
     let user;
 
     // find this user to get its cart
