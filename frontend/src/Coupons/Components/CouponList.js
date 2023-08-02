@@ -1,27 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 
 import CouponItem from "./CouponItem";
 import Card from "../../Shared/UI/Card";
 
+import { AuthContext } from "../../Shared/Context/auth-context";
+
 import styles from './CouponList.module.css';
 
 const CouponList = (props) => {
 
-    if(props.items.length === 0 && props.isCart === true) {
-        return (
-            <Card className={ styles.error_card }>
-                <h2>No Coupons in your Cart</h2>
-                <Link to={ "/" }>View Coupons</Link>
-            </Card>
-        );
-    }
+    const auth = useContext(AuthContext);
 
     if(props.items.length === 0 && !props.isCart) {
         return (
             <Card className={ styles.error_card }>
-                <h2>No Coupons found. Maybe create one?</h2>
-                <Link to={ "/coupon/new" }>Create Coupon</Link>
+                <h2>{ props.emptyCouponsTitle }</h2>
+                <Link to={ props.redirectLink }>{ props.redirectLinkName }</Link>
             </Card>
         );
     }
@@ -42,7 +37,7 @@ const CouponList = (props) => {
                         showEditButton={ props.showEditButton }
                         showDeleteButton={ props.showDeleteButton }
                         disableAddToCartBtn={ props.disableAddToCartBtn }
-                        disableDelete={ item.boughtBy }
+                        disableDelete={ item.boughtBy !== null && item.creator === auth.userId ? true : false }
                     />
                 )) }
         </li>

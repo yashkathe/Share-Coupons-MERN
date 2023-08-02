@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { AnimatePresence } from "framer-motion";
 
@@ -6,9 +6,13 @@ import ErrorModal from "../../Shared/UI/Modal";
 import LoadingSpinner from "../../Shared/UI/LoadingSpinner";
 import CouponList from "../Components/CouponList";
 
+import { AuthContext } from "../../Shared/Context/auth-context";
+
 import { useHttpClient } from "../../Hooks/useHttpHook";
 
 const Coupons = () => {
+
+    const auth = useContext(AuthContext);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [ loadedData, setLoadedData ] = useState();
@@ -20,11 +24,11 @@ const Coupons = () => {
                     'http://localhost:5000/api/coupons'
                 );
 
-                setLoadedData(responseData.coupons);
+                setLoadedData(responseData.coupons.filter(coupon => coupon.creator.toString() !== auth.userId));
             } catch(err) {}
         };
         fetchCoupons();
-    }, [ sendRequest ]);
+    }, [ sendRequest, auth ]);
 
     return (
         <React.Fragment>
@@ -34,7 +38,11 @@ const Coupons = () => {
             </AnimatePresence>
             { !isLoading && loadedData && (
                 <CouponList
-                    items={ loadedData } />) }
+                    items={ loadedData } 
+                    emptyCouponsTitle="No Coupons found"
+                    redirectLink="/coupon/new"
+                    redirectLinkName="Maybe create one"
+                    />) }
         </React.Fragment>
     );
 };

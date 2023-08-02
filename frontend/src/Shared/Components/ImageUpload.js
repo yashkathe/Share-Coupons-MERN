@@ -53,7 +53,7 @@ const ImageUpload = (props) => {
                 style={ { display: 'none' } }
                 accept=".jpg, .jpeg, .png"
             />
-            <div className={ styles[ 'parentDiv' ] }>
+            <div>
                 {
                     previewUrl && props.preview &&(
                         <div className={ styles[ 'image-upload__preview' ] }>

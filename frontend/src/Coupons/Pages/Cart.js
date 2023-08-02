@@ -82,11 +82,13 @@ const Cart = () => {
             { !isLoading && loadedData && (
                 <CouponList
                     items={ loadedData }
-                    isCart={ true }
                     onDeleteCoupon={ removeFromCartHandler }
                     deleteMessage="Delete coupon from cart ?"
                     showDeleteButton={ true }
                     disableAddToCartBtn={ true }
+                    emptyCouponsTitle="No Coupons in your Cart"
+                    redirectLink="/"
+                    redirectLinkName="View Coupons"
                 />) }
 
             {

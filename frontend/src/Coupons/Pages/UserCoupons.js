@@ -84,6 +84,9 @@ const UserCoupons = () => {
                         showEditButton={ !toggleBtn }
                         showDeleteButton={ !toggleBtn }
                         disableAddToCartBtn={ true }
+                        emptyCouponsTitle={ toggleBtn === false ? "No Coupons shared. Maybe create one?" : "No Coupons found. Maybe get one for free?" }
+                        redirectLink={ toggleBtn === false ? "/coupon/new" : "/" }
+                        redirectLinkName={ toggleBtn === false ? "Create Coupons" : "Get Coupons" }
                     />) }
             </AnimatePresence>
         </React.Fragment>

@@ -9,11 +9,19 @@
 
 .form_element button {
     margin: 1.4rem;
-    padding: 1rem 0rem;
-    width: 8vw;
-    border-radius: 1rem;
+    padding: 12px 1.2rem;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: transparent;
+    color: rgba(115, 113, 255,0.9);
+    border: 2.2px solid rgba(115, 113, 255,0.9);
+    font-weight: 650;
+    font-size: 1rem;
 }
 
 .form_element button:hover {
     cursor: pointer;
+    color: #7371ff;
+    border: 2.5px solid #7371ff;
+    box-shadow: 0px 0px 5px 2px #7371ff;
 }

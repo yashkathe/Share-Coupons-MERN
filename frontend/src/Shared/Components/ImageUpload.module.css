@@ -1,9 +1,10 @@
 .parentDiv {
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
 }
 
 .parentDiv button {
@@ -18,7 +19,7 @@
 .parentDiv button {
     text-decoration: none;
     padding: 7px 12px;
-    border: 2px solid #7371ff;
+    border: 1px solid #7371ff;
     border-radius: 15px;
     color: #757575;
     margin-top: 2rem;

@@ -38,7 +38,7 @@ const SignInForm = (props) => {
                 <FormLabel name="password" label="Password" type="password" changeHandler={ passwordChangeHandler } value={ password } required={ true } min="8" max="12" />
 
                 <div className={ styles.form_element }>
-                    <button type="submit" >LOG IN</button>
+                    <button type="submit" className={styles.login}>LOG IN</button>
                 </div>
             </form>
 

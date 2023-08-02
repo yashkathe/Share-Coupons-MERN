@@ -54,7 +54,7 @@ const SignupForm = (props) => {
                 <FormLabel name="confirmPassword" label="Confirm Password" type="password" changeHandler={ confirmPasswordChangeHandler } value={ confirmPassword } required={ true } min="8" max="12" />
                 <ImageUpload id="image" onInput={ profileImageHandler } preview={ profileImage } />
                 <div className={ styles.form_element }>
-                    <button type="submit" >SIGN UP</button>
+                    <button type="submit" className={styles.signup}>CREATE ACCOUNT</button>
                 </div>
             </form>
         </div>
