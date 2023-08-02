@@ -142,7 +142,7 @@ const CouponItem = (props) => {
                         <button
                             className={ styles.deleteBtn }
                             onClick={ deleteHandler }
-                            disabled={ !props.disableDelete ? true : false }>
+                            disabled={ props.disableDelete }>
                             DELETE
                         </button>) }
                 </div>
