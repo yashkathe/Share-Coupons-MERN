@@ -11,14 +11,18 @@ import { useHttpClient } from "../../Hooks/useHttpHook";
 
 import { AuthContext } from "../../Shared/Context/auth-context";
 
+import ToggleButtons from "../Components/ToggleButtons";
+
 const UserCoupons = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     const auth = useContext(AuthContext);
 
+    const userId = useParams().userId;
+
     const [ loadedData, setLoadedData ] = useState();
 
-    const userId = useParams().userId;
+    const [ toggleBtn, setToggleBtn ] = useState(false);
 
     useEffect(() => {
         const fetchCoupons = async () => {
@@ -29,6 +33,25 @@ const UserCoupons = () => {
         };
         fetchCoupons();
     }, [ sendRequest, userId ]);
+
+
+    const btn1OnClick = async () => {
+        setToggleBtn(prevState => !prevState);
+
+        try {
+            const responseData = await sendRequest(`http://localhost:5000/api/coupons/couponsBought/${userId}`);
+            setLoadedData(responseData.coupons);
+        } catch(err) {}
+    };
+
+
+    const btn2OnClick = async () => {
+        setToggleBtn(prevState => !prevState);
+        try {
+            const responseData = await sendRequest(`http://localhost:5000/api/coupons/user/${userId}`);
+            setLoadedData(responseData.coupons);
+        } catch(err) {}
+    };
 
     const onDeleteCoupon = async (deletedCouponId) => {
         try {
@@ -45,6 +68,12 @@ const UserCoupons = () => {
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
+            <ToggleButtons
+                btn1Disabled={ toggleBtn }
+                btn2Disabled={ !toggleBtn }
+                btn1OnClick={ btn1OnClick }
+                btn2OnClick={ btn2OnClick }
+            />
             <AnimatePresence>
                 { error && <Modal paraMessage={ error } onBackdropClick={ clearError } /> }
                 { !isLoading && loadedData && (
@@ -52,8 +81,8 @@ const UserCoupons = () => {
                         items={ loadedData }
                         onDeleteCoupon={ onDeleteCoupon }
                         deleteMessage="Do you want to proceed and delete this coupon ??"
-                        showEditButton={ true }
-                        showDeleteButton={ true }
+                        showEditButton={ !toggleBtn }
+                        showDeleteButton={ !toggleBtn }
                         disableAddToCartBtn={ true }
                     />) }
             </AnimatePresence>
