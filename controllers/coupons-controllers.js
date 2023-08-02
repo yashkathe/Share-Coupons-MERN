@@ -17,6 +17,19 @@ const getCoupons = async (req, res, next) => {
     res.status(200).json({ coupons: coupons.map(coupon => coupon.toObject({ getters: true })) });
 };
 
+const getCouponsBoughtByUser = async (req, res, next) => {
+    const userId = req.params.userId;
+
+    let user;
+    try {
+        user = await User.findById(userId).populate({ path: "couponsBought" });
+    } catch { return next(new HttpError('Couldnt find a user with specified ID', 500)); }
+
+    if(!user) return next(new HttpError('No such user found', 404));
+
+    res.status(200).json({ coupons: user.couponsBought.map(coupon => coupon.toObject({ getters: true })) });
+};
+
 const getCouponById = async (req, res, next) => {
     const couponId = req.params.couponId;
 
@@ -334,6 +347,7 @@ const checkoutCart = async (req, res, next) => {
 };
 
 exports.getCouponById = getCouponById;
+exports.getCouponsBoughtByUser = getCouponsBoughtByUser;
 exports.getCouponsByUserId = getCouponsByUserId;
 exports.createCoupon = createCoupon;
 exports.updateCouponById = updateCouponById;
