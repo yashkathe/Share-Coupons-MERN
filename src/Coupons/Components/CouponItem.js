@@ -34,11 +34,10 @@ const CouponItem = (props) => {
     const onViewHandler = async () => {
         try {
 
+            setShowCouponModal(true);
             const responseData = await sendRequest(`http://localhost:5000/api/coupons/${props.couponId}`);
             setLoadedData(responseData.coupon);
-            setShowCouponModal(true);
-
-        } catch(err) { console.log(err); }
+        } catch(err) {}
 
     };
 
@@ -82,11 +81,10 @@ const CouponItem = (props) => {
     return (
         <React.Fragment>
             { isLoading && <LoadingSpinner asOverlay /> }
+            { error &&
+                <Modal paraMessage={ error } onBackdropClick={ clearError } />
+            }
             <AnimatePresence>
-                { error &&
-                    <Modal paraMessage={ error } onBackdropClick={ clearError } />
-                }
-
                 { loadedData && showCouponModal && !isLoading && !error && (
                     <CouponModal
                         onBackdropClick={ closeViewHandler }
@@ -103,7 +101,9 @@ const CouponItem = (props) => {
                         isBoughtBySomeone={ loadedData.boughtBy === null ? false : true }
                         isBoughtByUser={ loadedData.boughtBy === auth.userId ? true : false }
                     />) }
+            </AnimatePresence>
 
+            <AnimatePresence>
                 { showDeleteModal &&
                     <Modal
                         headerMessage="Are you sure ?"
