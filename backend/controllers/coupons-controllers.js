@@ -318,29 +318,33 @@ const checkoutCart = async (req, res, next) => {
 
         // transfer cart to couponsBought
         user.couponsBought = [ ...user.cart ];
-
-        // empty out the cart
         user.cart = [];
 
-        // add user ref to coupons's boughtBy
-        for(const coupon of user.couponsBought) {
-            if(coupon.boughtBy === null) {
-                coupon.boughtBy = mongoose.Types.ObjectId(userId);
-            } else {
-                sess.abortTransaction();
-                return next(new HttpError(`the coupon "${coupon.title}" is already bought by someone`, 500));
-            }
-            try {
-                await coupon.save({ session: sess });
-            } catch(err) {
-                sess.abortTransaction();
-                return next(new HttpError('Failed to buy these coupons', 500));
-            }
+        //check if coupons are already bought by someone
+        const couponIds = user.couponsBought.map(coupon => coupon._id);
+
+        const existingCoupons = await Coupon.find({
+            _id: { $in: couponIds },
+            boughtBy: { $ne: null }
+        });
+
+        if(existingCoupons.length > 0) {
+            sess.abortTransaction();
+            return next(new HttpError(`The following coupons are already bought by someone: ${existingCoupons.map(coupon => coupon.title).join(', ')}`, 500));
         }
 
-        user.save({ session: sess });
+        // Mark coupons as bought by the user
+        for(const coupon of user.couponsBought) {
+            coupon.boughtBy = mongoose.Types.ObjectId(userId);
+            await coupon.save({ session: sess });
+        }
 
+        // Save the updated user
+        await user.save({ session: sess });
+
+        // Commit the transaction
         await sess.commitTransaction();
+
     } catch(err) { session.abortTransaction(); }
 
     res.status(200).json({ user: user.cart.toObject({ getters: true }), message: "You can use these coupons now" });
