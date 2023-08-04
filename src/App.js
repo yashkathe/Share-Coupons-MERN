@@ -8,7 +8,7 @@ import AddCoupons from "./Coupons/Pages/AddCoupons";
 import UserCoupons from "./Coupons/Pages/UserCoupons";
 import UpdateCoupon from "./Coupons/Pages/UpdateCoupon";
 import Cart from "./Coupons/Pages/Cart";
-import Header from "./Shared/Components/Header";
+import Header from "./Shared/Navigation/Header";
 
 import { AuthContext } from "./Shared/Context/auth-context";
 

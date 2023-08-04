@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import FormLabel from "../../Shared/Components/FormLabel";
 import ImageUpload from "../../Shared/Components/ImageUpload";
 
+import { motion } from "framer-motion";
+
 import styles from './Auth.module.css';
 
 const SignupForm = (props) => {
@@ -35,7 +37,7 @@ const SignupForm = (props) => {
         const formData = new FormData();
         formData.append('email', emailID);
         formData.append('password', password);
-        formData.append( 'confirmPassword', confirmPassword)
+        formData.append('confirmPassword', confirmPassword);
         formData.append('image', profileImage);
 
         props.onSigningUp(formData);
@@ -54,7 +56,7 @@ const SignupForm = (props) => {
                 <FormLabel name="confirmPassword" label="Confirm Password" type="password" changeHandler={ confirmPasswordChangeHandler } value={ confirmPassword } required={ true } min="8" max="12" />
                 <ImageUpload id="image" onInput={ profileImageHandler } preview={ profileImage } />
                 <div className={ styles.form_element }>
-                    <button type="submit" className={styles.signup}>CREATE ACCOUNT</button>
+                    <motion.button type="submit" className={ styles.signup } whileTap={ { scale: 0.9 } }>CREATE ACCOUNT</motion.button>
                 </div>
             </form>
         </div>

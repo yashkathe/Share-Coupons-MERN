@@ -64,17 +64,9 @@ const CouponItem = (props) => {
     const couponVariant = {
         initial: {
             x: "-5vw",
-            opacity: 0
         },
         animate: {
-            x: "0",
-            opacity: 1,
-            transition: { duration: 0 }
-        },
-        exit: {
-            opacity: 0,
-            x: "10vw",
-            transition: { duration: 2 }
+            x: "0"
         }
     };
 
@@ -122,7 +114,6 @@ const CouponItem = (props) => {
                 variants={ couponVariant }
                 initial="initial"
                 animate="animate"
-                exit="exit"
             >
                 <div className={ styles.couponItem__code }>
                     <h1> { props.title }</h1>

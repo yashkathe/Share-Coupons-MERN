@@ -56,7 +56,7 @@ const CouponModal = (props) => {
                     </div>
                     {
                         !props.disableAddToCartBtn && !props.isCreatedBySameUser && auth.isLoggedIn && !props.isBoughtByUser &&
-                        <button disabled={ props.disabled } className={ styles.button } onClick={ props.addToCart }>ADD TO CART</button>
+                        <motion.button disabled={ props.disabled } className={ styles.button } onClick={ props.addToCart } whileTap={{scale:0.9}}>ADD TO CART</motion.button>
                     }
                     {
                         !props.isCreatedBySameUser && !props.isBoughtBySomeone && !props.isBoughtByUser &&
