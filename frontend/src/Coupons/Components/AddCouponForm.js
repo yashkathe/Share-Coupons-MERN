@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { motion } from "framer-motion";
+
 import FormLabel from "../../Shared/Components/FormLabel";
 import styles from './AddCouponForm.module.css';
 
@@ -58,9 +60,9 @@ const AddCouponForm = (props) => {
             <FormLabel label="Description" type="text" changeHandler={ descriptionChangeHandler } value={ description } />
             <FormLabel label="Coupon Code" type="text" changeHandler={ couponChangeHandler } value={ couponCode } required={ true } />
             <FormLabel label="Company" type="text" changeHandler={ companyChangeHandler } value={ company } required={ true } />
-            <FormLabel label="Expiration Date" type="date" changeHandler={ dateChangeHandler } value={ expirationDate }/>
+            <FormLabel label="Expiration Date" type="date" changeHandler={ dateChangeHandler } value={ expirationDate } />
             <div className={ styles.form_element }>
-                <button type="submit" >CREATE COUPON</button>
+                <motion.button type="submit" whileTap={ { scale: 0.8 } }>CREATE COUPON</motion.button>
             </div>
         </form>
     );
