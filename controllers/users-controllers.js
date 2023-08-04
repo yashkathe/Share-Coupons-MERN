@@ -90,7 +90,7 @@ const login = async (req, res, next) => {
     }
 
     if(!existingUser) {
-        return next(new HttpError('Invalid Credentials', 401));
+        return next(new HttpError('The following Email-ID is not registered', 401));
     }
 
     let isValidPassword = false;
@@ -101,7 +101,7 @@ const login = async (req, res, next) => {
     }
 
     if(!isValidPassword) {
-        return next(new HttpError('Invalid Credentials', 401));
+        return next(new HttpError('Invalid Password', 401));
     }
 
     let token;
