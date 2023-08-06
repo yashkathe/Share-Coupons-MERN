@@ -361,7 +361,12 @@ const searchBarQuery = async (req, res, next) => {
 
     let coupons;
     try {
-        coupons = await Coupon.find({ title: { $regex: regexPattern } });
+        coupons = await Coupon.find({
+            $or: [
+                { title: { $regex: regexPattern } },
+                { company: { $regex: regexPattern } }
+            ]
+        });
     } catch(err) {
         console.log(err);
         return next(new HttpError("Something went wrong", 500));
