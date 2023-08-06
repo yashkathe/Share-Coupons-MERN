@@ -46,33 +46,26 @@ const CouponModal = (props) => {
                     animate="animate"
                     exit="exit"
                 >
-                    <h1>{ props.title }</h1>
+                    <h1>{ props.loadedData.title }</h1>
                     <p>
-                        { props.description }
+                        { props.loadedData.description }
                     </p>
                     <div className={ styles.info }>
-                        <p> company: </p> <p>{ props.company }</p>
-                        <p>expires-on: </p> <p>{ props.expirationDate }</p>
+                        <p> company: </p> <p>{ props.loadedData.company }</p>
+                        <p>expires-on: </p> <p>{ props.loadedData.expirationDate }</p>
                     </div>
                     {
                         !props.disableAddToCartBtn && !props.isCreatedBySameUser && auth.isLoggedIn && !props.isBoughtByUser &&
-                        <motion.button disabled={ props.disabled } className={ styles.button } onClick={ props.addToCart } whileTap={{scale:0.9}}>ADD TO CART</motion.button>
-                    }
-                    {
-                        !props.isCreatedBySameUser && !props.isBoughtBySomeone && !props.isBoughtByUser &&
-                        <p className={ styles.credits }> - Coupon provided by { props.creator }</p>
-                    }
-                    {
-                        props.isCreatedBySameUser && props.isBoughtBySomeone &&
-                        <p className={ styles.credits }> You can't delete this coupon now is it is bought by { props.creator }</p>
-                    }
-                    {
-                        !props.isCreatedBySameUser && props.isBoughtBySomeone && !props.isBoughtByUser &&
-                        <p className={ styles.credits }> Someone already bought this coupon</p>
+                        <motion.button
+                            className={ styles.button }
+                            onClick={ props.addToCart }
+                            whileTap={ { scale: 0.9 } }>
+                            ADD TO CART
+                        </motion.button>
                     }
                     { props.isBoughtByUser && auth.isLoggedIn &&
                         <div className={ styles.info }>
-                            <p> coupon code: </p> <p>{ props.code }</p>
+                            <p> coupon code: </p> <p>{ props.loadedData.couponCode }</p>
                         </div>
                     }
                 </motion.div>
