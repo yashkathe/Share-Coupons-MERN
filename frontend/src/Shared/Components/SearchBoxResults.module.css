@@ -1,0 +1,25 @@
+.wrapper {
+    width: 45vw;
+    height: auto;
+    background:#21262d;
+    padding: 5px 0;
+    border-bottom: 1px solid #757575 ;
+    border-radius: 10px;
+    color: #9c9b9b;
+}
+
+.wrapper li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 45vw;
+}
+
+.wrapper h1{
+    margin: 0;
+    font-size:1.5rem;
+}
+.wrapper p {
+    margin: 0;
+}
