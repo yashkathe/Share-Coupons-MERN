@@ -15,10 +15,9 @@ router.get('/user/:userId', couponsController.getCouponsByUserId);
 
 router.get('/', couponsController.getCoupons);
 
-router.get(
-    '/:userId/cart',
-    couponsController.getCartById
-);
+router.get('/:userId/cart', couponsController.getCartById);
+
+router.get('/search/searchBoxQuery', couponsController.searchBarQuery)
 
 router.use(checkAuth);
 

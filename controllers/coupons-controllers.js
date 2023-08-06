@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const mongoose = require('mongoose');
+const escapeRegExp = require("../middleware/esacpe-regex");
 
 const HttpError = require('../models/http-error');
 const Coupon = require('../models/coupons');
@@ -350,6 +351,26 @@ const checkoutCart = async (req, res, next) => {
     res.status(200).json({ user: user.cart.toObject({ getters: true }), message: "You can use these coupons now" });
 };
 
+const searchBarQuery = async (req, res, next) => {
+
+    let { query } = req.query;
+
+    query = escapeRegExp(query);
+
+    const regexPattern = new RegExp(query, 'i');
+
+    let coupons;
+    try {
+        coupons = await Coupon.find({ title: { $regex: regexPattern } });
+    } catch(err) {
+        console.log(err);
+        return next(new HttpError("Something went wrong", 500));
+    }
+
+    res.status(200).json({ coupons: coupons.map(coupon => coupon.toObject({ getters: true })) });
+
+};
+
 exports.getCouponById = getCouponById;
 exports.getCouponsBoughtByUser = getCouponsBoughtByUser;
 exports.getCouponsByUserId = getCouponsByUserId;
@@ -361,3 +382,4 @@ exports.addToCart = addToCart;
 exports.getCartById = getCartById;
 exports.deleteCouponFromCartById = deleteCouponFromCartById;
 exports.checkoutCart = checkoutCart;
+exports.searchBarQuery = searchBarQuery;
