@@ -1,25 +1,33 @@
 .wrapper {
     width: 45vw;
     height: auto;
-    background:#21262d;
-    padding: 5px 0;
-    border-bottom: 1px solid #757575 ;
+    background: #21262d;
+    border-bottom: 1px solid #757575;
     border-radius: 10px;
     color: #9c9b9b;
+    box-sizing: border-box;
 }
 
-.wrapper li {
+.wrapper:hover {
+    cursor: pointer;
+}
+
+.wrapper>li {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    height: auto;
     width: 45vw;
+    height: 8vh;
 }
 
-.wrapper h1{
+.wrapper h1 {
     margin: 0;
-    font-size:1.5rem;
+    font-size: 1.5rem;
 }
+
 .wrapper p {
     margin: 0;
+    font-size: 1rem;
 }

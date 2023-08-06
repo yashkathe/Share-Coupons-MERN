@@ -80,17 +80,10 @@ const CouponItem = (props) => {
                 { loadedData && showCouponModal && !isLoading && !error && (
                     <CouponModal
                         onBackdropClick={ closeViewHandler }
-                        title={ loadedData.title }
-                        description={ loadedData.description }
-                        company={ loadedData.company }
-                        expirationDate={ loadedData.expirationDate }
-                        creator={ loadedData.creator.email }
-                        code={ loadedData.couponCode }
+                        loadedData={loadedData}
                         addToCart={ addToCartHandler }
-                        disableAddToCartBtn={ props.disableAddToCartBtn }
-                        disabled={ loadedData.creator.id === auth.userId ? true : false }
+                        disableAddToCartBtn={ props.disableAddToCartBtn || loadedData.creator.id === auth.userId ? true : false  }
                         isCreatedBySameUser={ loadedData.creator.id === auth.userId ? true : false }
-                        isBoughtBySomeone={ loadedData.boughtBy === null ? false : true }
                         isBoughtByUser={ loadedData.boughtBy === auth.userId ? true : false }
                     />) }
             </AnimatePresence>

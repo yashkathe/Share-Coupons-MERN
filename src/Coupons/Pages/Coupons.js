@@ -18,7 +18,7 @@ const Coupons = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [ loadedData, setLoadedData ] = useState();
     const [ searchBarResult, setSearchBarResult ] = useState();
-
+    
     useEffect(() => {
         const fetchCoupons = async () => {
             try {
@@ -36,10 +36,10 @@ const Coupons = () => {
 
     const fetchResults = async (q) => {
         const response = await fetch(
-            `http://localhost:5000/api/coupons/search/searchBoxQuery?query=${q}`
+            `http://localhost:5000/api/coupons/search/query?query=${q}`
         );
         const responseData = await response.json();
-        setSearchBarResult(responseData.coupons);
+        setSearchBarResult(responseData.coupons.filter(coupon => coupon.boughtBy === null));
     };
 
     return (
@@ -48,9 +48,13 @@ const Coupons = () => {
             <AnimatePresence>
                 { error && <ErrorModal paraMessage={ error } onBackdropClick={ clearError } /> }
             </AnimatePresence>
-            <SearchBox
-                fetchResults={ fetchResults }
-                searchBarResult={ searchBarResult } />
+            {
+                loadedData && loadedData.length &&
+                <SearchBox
+                    fetchResults={ fetchResults }
+                    searchBarResult={ searchBarResult }
+                />
+            }
             { !isLoading && loadedData && (
                 <CouponList
                     items={ loadedData }
