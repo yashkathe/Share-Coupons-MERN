@@ -16,7 +16,10 @@ const CouponList = (props) => {
         return (
             <Card className={ styles.error_card }>
                 <h2>{ props.emptyCouponsTitle }</h2>
-                <Link to={ props.redirectLink }>{ props.redirectLinkName }</Link>
+                <div>
+                    <Link to={ props.redirectLink }>{ props.redirectLinkName }</Link>
+                    <button onClick={ props.onRedirect }>{props.redirectButtonName}</button>
+                </div>
             </Card>
         );
     }

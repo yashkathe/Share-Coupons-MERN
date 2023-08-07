@@ -19,18 +19,33 @@
     height: 20vh;
 }
 
-.error_card>a {
+.error_card>div {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.error_card a,
+.error_card button {
     text-decoration: none;
     padding: 7px 12px;
     border: 1px solid #7371ff;
     border-radius: 15px;
     color: #b8b8b8;
+    background: none;
+    font-size: 1rem;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.error_card>a:hover {
+.error_card a:hover,
+.error_card button:hover {
     color: #7371ff;
+    cursor: pointer;
 }
 
-.error_card>a:hover + .error_card{
+.error_card a:hover+.error_card,
+.error_card button:hover+.error_card {
     box-shadow: 4px 2px 8px #7371ff;
 }

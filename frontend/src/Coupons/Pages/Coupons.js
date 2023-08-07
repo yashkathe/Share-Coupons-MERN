@@ -18,8 +18,10 @@ const Coupons = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [ loadedData, setLoadedData ] = useState();
     const [ searchBarResult, setSearchBarResult ] = useState();
-    
+    const [rerender, setRerender] = useState()
+
     useEffect(() => {
+        setRerender(false)
         const fetchCoupons = async () => {
             try {
                 const responseData = await sendRequest(
@@ -31,7 +33,7 @@ const Coupons = () => {
             } catch(err) {}
         };
         fetchCoupons();
-    }, [ sendRequest, auth ]);
+    }, [ sendRequest, auth, rerender ]);
 
 
     const fetchResults = async (q) => {
@@ -39,7 +41,23 @@ const Coupons = () => {
             `http://localhost:5000/api/coupons/search/query?query=${q}`
         );
         const responseData = await response.json();
-        setSearchBarResult(responseData.coupons.filter(coupon => coupon.boughtBy === null));
+        setSearchBarResult(responseData.coupons.filter(coupon =>
+            coupon.creator.toString() !== auth.userId &&
+            coupon.boughtBy === null));
+    };
+
+    const searchValueHandler = async (searchVal) => {
+        try {
+            const responseData = await sendRequest(
+                `http://localhost:5000/api/coupons/search/query?query=${searchVal}`
+            );
+
+            setLoadedData(responseData.coupons.filter(coupon =>
+                coupon.creator.toString() !== auth.userId &&
+                coupon.boughtBy === null
+            ));
+
+        } catch(err) {}
     };
 
     return (
@@ -53,6 +71,7 @@ const Coupons = () => {
                 <SearchBox
                     fetchResults={ fetchResults }
                     searchBarResult={ searchBarResult }
+                    search={ searchValueHandler }
                 />
             }
             { !isLoading && loadedData && (
@@ -60,7 +79,9 @@ const Coupons = () => {
                     items={ loadedData }
                     emptyCouponsTitle="No Coupons found"
                     redirectLink="/coupon/new"
-                    redirectLinkName="Maybe create one"
+                    redirectLinkName="Create one"
+                    onRedirect={() => {setRerender(true)}}
+                    redirectButtonName="Return Home"
                 />) }
         </React.Fragment>
     );
