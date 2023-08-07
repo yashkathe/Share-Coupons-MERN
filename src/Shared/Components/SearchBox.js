@@ -66,6 +66,12 @@ const SearchBox = (props) => {
         } catch(err) {}
     };
 
+    const searchHandler = (searchVal) => {
+        if(searchVal.trim() !== "") {
+            setInput("");
+            props.search(searchVal);
+        }
+    };
 
     return (
         <React.Fragment>
@@ -76,7 +82,8 @@ const SearchBox = (props) => {
             <div className={ styles.wrapper }>
                 <div className={ `${isInputFocused ? styles.wrapperChild : ""}` }>
                     <FaSearch
-                        className={ `${isInputFocused ? styles.searchIcon : styles.searchIconDisabled}` } />
+                        onClick={ () => { searchHandler(input); } }
+                        className={ `${isInputFocused && input.trim() !== "" ? styles.searchIcon : styles.searchIconDisabled}` } />
                     <input
                         className={ styles.input }
                         placeholder="Search Coupons"
